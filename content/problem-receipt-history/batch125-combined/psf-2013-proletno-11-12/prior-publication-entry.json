@@ -1,0 +1,48 @@
+{
+  "kind": "legacy",
+  "contentHash": "edb3f78af6917a921ecdda15dd3530a16b6213da516e48b9bf1628d5e51752f3",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:23.055Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a4b5959d26968c30a",
+      "finishedAt": "2026-09-05T06:38:19.259689Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_d7aceea9-3de",
+      "ok": true,
+      "problems": 3,
+      "figures": 12
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "abcb1a36835572aab",
+      "finishedAt": "2026-09-04T21:45:28.540040Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_6e4106d8-b20",
+      "verdict": "fixed",
+      "defectsFound": 2,
+      "defectsFixed": 2,
+      "remaining": [
+        "JSON was complete (not truncated): paper block + 3 problems, all statements/parts/solutions/figures present.",
+        "Verbatim check passed against both PDFs (rendered at 160 dpi AND the text layer, which is intact for prose): all three statements, all 12 part statements, and both solution blobs match word-for-word, including hyphen-broken 'съпротив-ленията' correctly rejoined.",
+        "Numbers/units/subscripts verified: m=1 kg, alpha=30°, beta=45°, g=10 m/s^2; T1=2mg/(sqrt3+1)~7,3 N, T2=sqrt2*mg/(sqrt3+1)~5,2 N (text layer loses the radical index and shows '2mg' - the rendered page confirms sqrt2, transcription is right), a=g sin alpha=5,0 m/s^2, T=mg cos alpha~8,7 N, T=mg(3-2cos alpha)~12,7 N; Re=3/2 R, 4/5 R, 1/2 R; R1=R3=8/3 R, R2=2R.",
+        "Printed point values match exactly: P1 1.0/2.0/1.5/2.0/3.5=10; P2 1.5/3.0/3.0/2.5=10; P3 2/4/4=10; total 30. All in-solution [x т] markers match the pages.",
+        "All 12 figure URLs return HTTP 200, byte dimensions match the JSON width/height, and every crop was downloaded and looked at: each shows its full figure, none clipped, none swallowing body text or the adjacent [x т] point markers.",
+        "LaTeX: 163 math snippets (inline, display, and bare answer.latex/equivalentForms) all render under KaTeX 0.16 with throwOnError. No bare << or >>, no raw HTML tags.",
+        "Schema: validates clean against content/problems/schema.json (Draft 2020-12), before and after fixes.",
+        "paper.year=2013, round=null (PSF, correct per vocabulary), grade='11-12', title/held/place match page 1 header ('Хисаря, 16-17 март 2013 г.', 'Тема за 11.–12. клас'). id/grade/roundType conventions match the 40+ existing PSF files.",
+        "DEFECT 1 (fixed): the three solution drawings p2-sol-fig1/2/3 were duplicated verbatim into problem 2's statement parts А), В) and Г) as well as solution.figures — solution diagrams leaking into the problem statement, and 0/640 precedent for this in the existing corpus. Removed from the parts; kept in solution.figures. (Problem 3's part figures p3-fig1/2/3 are genuine statement figures and were left in place.)",
+        "DEFECT 2 (fixed): problem 3 solution А) had 'Еквивалентното ѝ съпротивление'; the source prints 'й' (confirmed by both the text layer and a pixel zoom of sol page 3). Silent orthographic normalisation reverted to the source spelling.",
+        "Source errors preserved and documented in transcription.notes (pre-existing and confirmed by me): eq (12) of problem 1 carries a spurious (cos a + sin a cotg b)^2 factor in the intermediate expression; 'x_S = OA + BS' should read OB per the figure; cot vs cotg used on consecutive lines; x_S/x_s subscript case flips between sub-parts А and Б in the statement; the solutions cover page dates the event '15–17 март' while the problems cover page says '16-17 март'.",
+        "Noted additionally: the statement's text layer uses Cyrillic homoglyphs for the terminal labels in problem 3 ('А и В', 'F и С') while the diagrams use Latin; the transcription renders them as Latin math symbols, which matches the figures. 'От ІІ принцип на Нютон' uses Cyrillic І in the source, Latin II here."
+      ]
+    },
+    "postVerificationEdits": false,
+    "fileTime": "2026-09-04T21:44:43.582858Z",
+    "fileCommittedAt": "2026-09-05T00:51:08+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

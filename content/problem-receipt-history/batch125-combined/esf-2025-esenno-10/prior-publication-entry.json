@@ -1,0 +1,41 @@
+{
+  "kind": "legacy",
+  "contentHash": "699e2ac660c83d3e28f5f68e190f97eeb44524570c28eba35e91c034e6dad2d7",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:20.749Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a2e7351df4106060f",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "ok": true,
+      "problems": 3,
+      "figures": 12
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "ae9b77c7db5007651",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "verdict": "fixed",
+      "defectsFound": 5,
+      "defectsFixed": 3,
+      "remaining": [
+        "p2-fig1 (Фиг. 2 (а)) is clipped: the horizontal x-axis line starts at x≈72.2 pt but source.pdfRect x0 = 85.5 pt, cutting ~13 pt (55 px @300 dpi) of the axis so it runs into the frame edge. Needs re-crop with x0≈70 pt and re-upload of https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2025-esenno-10/p2-fig1.png — cannot be fixed by editing the JSON alone (width/height metadata would stop matching the published PNG).",
+        "p3-fig3 (Фиг. 3 (в)) shaves ~3 px (≈0.7 pt) off the tip of the wheel rotation arrow at the top edge (pdfRect y0 = 262.35 pt). Cosmetic; same re-crop + re-upload constraint.",
+        "Structural (documented, not restructured): the „Указания“ block of problem 2 is printed AFTER part г) but is stored in the problem-level statement, and the paper-level preamble „Във всички задачи… g = 9,8 m/s²“ is stored inside problem 1's statement. Both are now recorded in transcription.notes; a schema-level paper preamble / trailing-note field would be the real fix.",
+        "Archive/catalog year mismatch persists (archiveKey folder „2026“ vs printed „София, 7-9 ноември 2025 г.“) — already documented in transcription.notes, unchanged by this pass.",
+        "transcription.verifiedBy / verifiedAt left null — set them only if an automated verification pass is allowed to claim those fields."
+      ]
+    },
+    "postVerificationEdits": true,
+    "fileTime": "2026-09-01T14:48:04.637897Z",
+    "fileCommittedAt": "2026-09-04T07:09:18+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

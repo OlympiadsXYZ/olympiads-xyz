@@ -1,0 +1,40 @@
+{
+  "kind": "legacy",
+  "contentHash": "268617e408d37e6c70e66666bb684cf473b3976291dd10a53c50b134fca33fe2",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:22.675Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a4660d23ac3fa7212",
+      "finishedAt": "2026-09-01T15:08:42.866449Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_39cd24b9-231",
+      "ok": true,
+      "problems": 3,
+      "figures": 4
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "abfe7fe65f1386afd",
+      "finishedAt": "2026-09-04T01:12:07.504745Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_0f672e8b-406",
+      "verdict": "fixed",
+      "defectsFound": 5,
+      "defectsFixed": 4,
+      "remaining": [
+        "Problem 2's solution embeds the schematic via inline markdown with NO solution.figures entry - the only such case among the six NOF 2026 papers. It renders once (no visible bug) but carries no caption/alt/dimensions/provenance, and reuses the problem-page crop (zad8.pdf p1) for a figure that is printed on solution page 2. I verified the two printed schematics are pixel-equivalent and documented the reuse in transcription.notes, but a proper fix needs either a new asset cropped from resh8.pdf p2 or a provenance field that can honestly express cross-document asset reuse. Left for a human call.",
+        "Problem 1's parts[] points sum to 7.5 while problem.points = 10 - the only such mismatch across all six NOF 2026 papers. It is a faithful consequence of the source (the 2.5-point award for the accurate v(t) graph is not tied to any lettered sub-part) and is documented in transcription.notes, but any consumer that sums part points will disagree with the stated paper total.",
+        "Renderer-level duplicate point markers: scripts/problems-to-site.mjs appends **[N т.]** after every part statement, while this paper (and nof-2026-ii-7) keep the printed marker inline verbatim, so each part displays its points twice. Corpus-wide / renderer issue, out of scope for this file; the printed values themselves are correct and match print exactly.",
+        "Problem 1 part г) carries the post-list body text (the fill-in table plus the 2.5-point 'accurate graphs' instruction), so the build script's auto-appended **[1 т.]** lands after the 2.5-point instruction rather than after part г)'s own sentence. Consequence of the documented structural choice; the build script has no 'after parts' slot to place trailing problem text."
+      ]
+    },
+    "postVerificationEdits": true,
+    "fileTime": "2026-09-04T03:56:57.481229Z",
+    "fileCommittedAt": "2026-09-04T07:09:18+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

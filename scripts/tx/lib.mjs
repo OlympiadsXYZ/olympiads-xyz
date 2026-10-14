@@ -2,6 +2,7 @@
 // Everything here is pure plumbing: paths, hashing, paper-id derivation,
 // schema compilation, math-span detection and the deterministic serialisation
 // that receipt.mjs and promote.mjs must agree on byte-for-byte.
+import { mixedDocumentRenderDpiProblems } from './native-original-bindings.mjs';
 import {
   isNativeImageCrop,
   nativeImageCropEvidenceError,
@@ -52,7 +53,7 @@ export const RENDER_DPI = 160;
 export const FIGURE_DPI = 300;
 // A new receipt records the actual prepared page rendering. Historical receipts
 // without an explicit value retain their original deterministic default bytes.
-export function renderDpiFor(manifest) {
+export function renderDpiFor(manifest, nativeContext = null) {
   const documents = Object.entries(manifest.documents || {});
   const dpi =
     manifest.renderDpi ??
@@ -63,8 +64,28 @@ export function renderDpiFor(manifest) {
       'Invalid source renderDpi: expected a positive finite number'
     );
   }
+  let qualifiedNativeContext = false;
+  if (nativeContext !== null) {
+    const problems = mixedDocumentRenderDpiProblems(
+      nativeContext.evidence,
+      manifest,
+      nativeContext.sourceDirectory,
+      nativeContext.candidate,
+      nativeContext.renderWitness
+    );
+    if (problems.length) {
+      throw new Error(
+        'Source renderDpi qualification failed: ' + problems.join('; ')
+      );
+    }
+    qualifiedNativeContext = true;
+  }
   for (const [id, doc] of documents) {
-    if (doc.renderDpi !== undefined && doc.renderDpi !== dpi) {
+    if (
+      doc.renderDpi !== undefined &&
+      doc.renderDpi !== dpi &&
+      !qualifiedNativeContext
+    ) {
       throw new Error('Source renderDpi differs for document ' + id);
     }
   }

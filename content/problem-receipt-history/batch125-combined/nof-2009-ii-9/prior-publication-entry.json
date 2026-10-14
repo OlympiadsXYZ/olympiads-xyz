@@ -1,0 +1,40 @@
+{
+  "kind": "legacy",
+  "contentHash": "00d77a87010155cd0320225b00b5ea877765078e965ff6343093c07c3450f667",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:21.019Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a2b5da52e49fd9c2b",
+      "finishedAt": "2026-09-05T22:00:33.079Z",
+      "finishedAtSource": "transcript",
+      "run": "wf_e7d4406c-985",
+      "ok": false,
+      "problems": 3,
+      "figures": 2
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "a42ebfc03ea39e6c6",
+      "finishedAt": "2026-09-04T12:25:41.196362Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_8e3038e7-518",
+      "verdict": "fixed",
+      "defectsFound": 1,
+      "defectsFixed": 1,
+      "remaining": [
+        "Source errors preserved and documented in transcription.notes (not defects): (1) problem 3 data are internally inconsistent - part a) implies mg = T1+T2 = 0,03 N while m=5 g and g=10 m/s^2 give mg = 0,05 N, the value actually used in b) and c); (2) the solution to 3v) writes the maximum tension as T_0 while the statement calls it T_max; (3) the solutions PDF has the typo 'tolina' for 'toplina' on page 2.",
+        "Problem titles ('Bateriya s dva konsumatora' etc.) are editorial, not printed on the page - same convention as the already-promoted sibling papers in this directory.",
+        "answer.value for multi-quantity parts stores only the first quantity (e.g. p1a stores R'=0.6 Ohm, with R''=0.14 Ohm carried in answer.latex/note) - consistent with existing repo files, but worth a schema-level decision later.",
+        "Defect fixed: 9 in-math decimal commas were written as plain '9,1' / '0,02' instead of the repo's braced '9{,}1' form, which renders with spurious comma spacing in KaTeX; corrected in problems 1 and 3 statements and in two answer notes."
+      ]
+    },
+    "postVerificationEdits": false,
+    "fileTime": "2026-09-04T03:41:39.408725Z",
+    "fileCommittedAt": "2026-09-04T07:09:18+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

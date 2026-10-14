@@ -1,0 +1,48 @@
+{
+  "kind": "legacy",
+  "contentHash": "2e9ffeda7de29ccd40d9f08d02fe7e9714faaf8a14c421b3d0f61c7a24068bb9",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:20.930Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a0d88ec308942f50e",
+      "finishedAt": "2026-09-05T07:22:07.710864Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_a402f290-7a1",
+      "ok": false,
+      "problems": 3,
+      "figures": 0
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "a6ed1a49260fb9418",
+      "finishedAt": "2026-09-04T13:03:42.511313Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_76846dd6-a19",
+      "verdict": "clean",
+      "defectsFound": 0,
+      "defectsFixed": 0,
+      "remaining": [
+        "JSON was complete (no truncation): paper block + 3 problems, each with statement, parts, points, answers, solution; 2 figures.",
+        "All three problem statements and all 10 sub-parts checked word-for-word against zad.pdf p1 at 160 dpi (plus 400 dpi zooms): alpha=30deg, m=3 kg, v0=4 m/s, L=1,2 m; lambda=500 nm, d=2,5 mm, L=5 m, n=4/3 - all exact. No invented or missing problem.",
+        "Printed point values match exactly: 4,5+3,5+2=10, 3+3+4=10, 1+5+2+2=10, totalPoints 30.",
+        "Solutions on resh.pdf pp.1-3 verified line by line, including every inline point marker (0,5 точки / [0.5 т.]) and the numbers 23/18, 23/41, 0.5610C, k^2+3k-2=0, k=(sqrt17-3)/2, 0.5616C, v1~2,8 m/s, t~1,46 s, dx=1 mm, dx_water=0,75 mm. Confirmed at 400 dpi.",
+        "Source errors correctly preserved and documented in transcription.notes: printed 'с капацитети C/4 е C/8' (missing second C/4), 'в начално си положение', mixed decimal comma/point in point markers, t~1,46 s from rounded v1, implicit g=10 m/s^2.",
+        "Both figure URLs return HTTP 200; PNGs downloaded and inspected - p2-fig1 (760x404) shows the full capacitor ladder A/B/M/N with C, C/2, C/4, C/2^n labels and dashed continuation; p3-sol-fig1 (1660x636) shows the full interference geometry with lambda, d, l1, l2, L, x_n. Neither is clipped nor swallows body text; declared width/height match the actual files.",
+        "LaTeX balanced ($, $$, braces, left/right); no bare << or >> (uses \\ll); no raw HTML.",
+        "paper.year=2008, round='II кръг (областен)', grade='10-12' all match page 1 header ('Областен кръг, 22 март 2008 г., Тема за 10 – 12 клас').",
+        "Validates against content/problems/schema.json with 0 errors.",
+        "Only stylistic deviation, already noted by the transcriber: the sentence 'На фигурата е дадена верига от кондензатори.' was moved from part а) into the problem-2 statement so the figure has a carrier; the rest of part а) is verbatim. Left as-is.",
+        "Minor stylistic point, not corrected: p2 answers use unit 'C' for a capacitance expressed as a multiple of C (0.5610C, 0.5616C); the exact expression is in the latex field, so it is unambiguous.",
+        "Working dir tmp/shards/work/verify/nof-2008-ii-10-12 removed. Note: the two source PDFs disappeared from that scratch dir mid-session (likely a concurrent cleanup); verification was completed from the already-rendered 160/400 dpi page images."
+      ]
+    },
+    "postVerificationEdits": false,
+    "fileTime": "2026-09-04T05:14:42.334917Z",
+    "fileCommittedAt": "2026-09-04T15:34:11+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "kind": "legacy",
+  "contentHash": "1666e3f877b76aa0a5d12f59ae58d1862e9d93f8be1728d8159de466c5524fd1",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:22.652Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a5a5ccbc95d62d050",
+      "finishedAt": "2026-09-01T15:08:42.866449Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_39cd24b9-231",
+      "ok": true,
+      "problems": 3,
+      "figures": 6
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "a6fcd67d10ab4b9b7",
+      "finishedAt": "2026-09-04T01:12:07.504745Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_0f672e8b-406",
+      "verdict": "fixed",
+      "defectsFound": 1,
+      "defectsFixed": 1,
+      "remaining": [
+        "NOTE ON THE VERDICT: zero content/transcription defects were found. The single 'defect' counted is a documentation gap in transcription.notes, which I fixed. Statements, parts, points, equations, tables-of-values, solutions and figures all verify verbatim against the two source PDFs.",
+        "FIXED (documentation): transcription.notes listed every other source oddity but omitted that the ORIGINAL itself types a Latin 'e' (U+0065) for the Bulgarian verb 'е' in two spots - problem 2's ** footnote (immediately after 'ln x') and solution 2г ('Нека T1 e крайната температура'). Confirmed via the PDF text layer that this is a source artifact, not a transcription slip, so the characters are preserved and a note was added at content/problems/physics/NOF/2026/nof-2026-ii-12.json (paper.transcription.notes).",
+        "NOT A DEFECT, left as-is: transcription.notes uses German-style „…“ (U+201C as closer) for its own editorial quotations, while the transcribed content correctly reproduces the source's Bulgarian „…” (U+201D). Cosmetic, confined to the notes field; normalizing would be churn.",
+        "NOT A DEFECT, left as-is: problem 3 part б) statement writes $U_1'$ и $U_2{}'$ (asymmetric), while the answer and solution use U_1' / U_2'. Both render U₂′ and are valid LaTeX; the asymmetry faithfully mimics the print, where the prime on U₂ is set spaced away from the subscript.",
+        "NOT A DEFECT, left as-is: a few source grammar slips are preserved verbatim but not itemized in transcription.notes - 'предварително пресметнатата числената стойност' (solution 2б) and 'се установяват еднакъв ток' (solution 3б). Preservation is correct; only the note list is not exhaustive on these two.",
+        "PIPELINE FIELDS NOT TOUCHED: paper.status is still 'draft' and transcription.verifiedBy / verifiedAt are still null. I did not set them, since that is an orchestration decision rather than a transcription fix."
+      ]
+    },
+    "postVerificationEdits": false,
+    "fileTime": "2026-09-04T00:58:33.550256Z",
+    "fileCommittedAt": "2026-09-04T07:09:18+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

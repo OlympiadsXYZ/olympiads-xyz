@@ -1,0 +1,40 @@
+{
+  "kind": "legacy",
+  "contentHash": "2d50cfb34844723a0ea70ac8ab00f1463bb8518e60b7bccd7d5e4d036b640e63",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:19.451Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "adffb8f41a6ca2d81",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "ok": true,
+      "problems": 5,
+      "figures": 10
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "ac6d84f4db24f1827",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "verdict": "fixed",
+      "defectsFound": 4,
+      "defectsFixed": 3,
+      "remaining": [
+        "p5-photo2 figure crop is clipped at the bottom: source.pdfRect is [288.9, 515.25, 512.1, 688.5] but the embedded image on question page 3 spans [289.8, 519.56, 506.65, 714.56] pt, so the published PNG (931x723) loses 26.06 pt (~13% of the photo height) including the lower foreground field and fence posts. Correct rect on the file's 0.45 pt grid: [288.9, 517.5, 508.5, 716.4], which renders at 300 dpi to 916x829. Requires re-rendering and overwriting the public R2 object problems/nao-2026-ii-9-10/p5-photo2.png, then updating pdfRect/width/height together — not done because it modifies publicly served content.",
+        "Non-blocking observation: problem 3 part Б answer is encoded as kind 'numeric' (224 kg/m^3) although the printed question asks a qualitative question ('какво може да се каже за нейният състав и строеж?'); the gas-giant conclusion lives only in answer.note. Consider kind 'text' with the density in the note.",
+        "Non-blocking observation: problem 5's statement includes the line 'Предайте този лист заедно с решенията си!', which is printed as a page footer on the figure sheets (question pages 4-6), not on the statement page (page 3).",
+        "Non-blocking observation: p5-photo1's crop is a loose superset of the image bbox, leaving visible white margins (4-12 pt on each side); cosmetic only, nothing clipped."
+      ]
+    },
+    "postVerificationEdits": true,
+    "fileTime": "2026-09-04T00:58:33.529476Z",
+    "fileCommittedAt": "2026-09-04T07:09:18+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

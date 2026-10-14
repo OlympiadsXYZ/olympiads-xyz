@@ -1,0 +1,40 @@
+{
+  "kind": "legacy",
+  "contentHash": "80d081c054a48406ba1a1645d2d830fe87d21e7462a8b86967a29f16a5619f36",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:19.428Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "af6b34d3b895a4015",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "ok": true,
+      "problems": 5,
+      "figures": 16
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "ae572f954d293e015",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "verdict": "fixed",
+      "defectsFound": 6,
+      "defectsFixed": 6,
+      "remaining": [
+        "Paper-level instruction 'Употребата на калкулатор е разрешена!' (printed under the header on problem page 1) is not captured anywhere; content/problems/schema.json has no field on `paper` for exam instructions, so it cannot be stored without a schema change.",
+        "The `correct` field convention (0-based index vs 1-based vs literal choice text) is undocumented in content/problems/schema.json; this paper is the repo's only usage. I used the string form to make it unambiguous, but the schema should state the intended convention.",
+        "Smiley glyph mismatch: the PDF text layer encodes U+1F60A while the JSON uses ☺ (U+263A) in problem 4А and the problem-1 solution. The printed glyph is a monochrome outline face, so ☺ was kept; flagging only in case a byte-exact policy applies.",
+        "transcription.verifiedBy / verifiedAt left null and paper.status left 'draft' — the schema reserves 'published' for human review, and this was an automated verification pass."
+      ]
+    },
+    "postVerificationEdits": true,
+    "fileTime": "2026-09-04T00:58:33.526470Z",
+    "fileCommittedAt": "2026-09-04T07:09:18+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

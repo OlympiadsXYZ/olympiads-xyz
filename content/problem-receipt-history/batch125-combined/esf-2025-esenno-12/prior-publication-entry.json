@@ -1,0 +1,43 @@
+{
+  "kind": "legacy",
+  "contentHash": "4cf4b8e4b6632fe2eebef962aff3d26d7da16b1ad6745148039b4f3f4e24fd1f",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:20.771Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a54d2f2bf2bec1ab5",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "ok": true,
+      "problems": 3,
+      "figures": 7
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "a29e91a8c22292e9c",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "verdict": "clean",
+      "defectsFound": 0,
+      "defectsFixed": 0,
+      "remaining": [
+        "No transcription defects found; JSON was not modified (sha256 4cf4b8e4b6632fe2, 31869 bytes).",
+        "COSMETIC, not fixed: figure p1-fig1 (https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2025-esenno-12/p1-fig1.png, rect [45.0,137.25,537.75,340.2] on problems p.1) includes the heading 'Задача 1. Салто мортале.' and the two lines 'Фигурата е само илюстративна. / Мащабът не е спазен.' that are also problems[0].statement, so that text renders twice. Measured the page ink: figure top ink is at y=142.5pt (above the heading baseline ~150pt) and the ground line extends left to x=145pt, while the statement text occupies x 50-250pt at y 180-210pt — no axis-aligned rect can exclude the text without clipping the ramp/H-arrow or the ground line/L-arrow. Would need a non-rectangular mask plus a re-upload to R2 (modifying published content), so left alone for a human decision.",
+        "Source typos preserved verbatim (correct behaviour, flagged so a reviewer does not 'fix' them): the PDF itself prints 'sin β²'/'sin α²' meaning sin²β — kept as \\sin\\beta^2 in the solution text while answer.latex/equivalentForms use the corrected \\sin^2\\beta; and problem 2 solution в) says 'температурата T₃ на пластината от вещество 2' where the source means 'на двете пластини'.",
+        "Editorial structure, left as-is: the printed problem 2 part 'а)' contains the whole experimental setup; the JSON hoists that setup into problems[1].statement and starts part а) at 'Зависимостта на електрическото съпротивление R₁...'. No clause dropped or reworded, and the setup is shared context that parts б) and в) refer back to, but the а) boundary differs from print.",
+        "paper.transcription.verifiedBy / verifiedAt remain null — consistent with all five sibling ESF 2025 papers and with the project's human-review-before-publishing rule; a human sign-off is still outstanding. paper.status is still 'draft'.",
+        "Trivial: the Bulgarian optical-power symbol printed as Cyrillic Ф (U+0424) is rendered as \\Phi (Greek Φ). Visually equivalent and standard physics notation.",
+        "Verified independently by recomputation: H₁=18.75 m, v₀=16.34→16.3 m/s, L=26.05→26.1 m, constants 30.53 and 1.347, all nine iteration values, and all 30 resistance-table entries from R=6250/(T−20). All 173 LaTeX snippets pass KaTeX. All 7 figure URLs return 200 with matching dimensions and no clipping."
+      ]
+    },
+    "postVerificationEdits": false,
+    "fileTime": "2026-09-01T13:03:20.826736Z",
+    "fileCommittedAt": "2026-09-01T07:36:41-07:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

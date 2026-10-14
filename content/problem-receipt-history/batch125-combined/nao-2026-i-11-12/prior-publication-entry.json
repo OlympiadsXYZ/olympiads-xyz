@@ -1,0 +1,38 @@
+{
+  "kind": "legacy",
+  "contentHash": "79208cff64fbd87f457fb38a447f68a2af563ea21d7f4a9dd44afcffa3b3bef5",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:19.370Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "ad7d34aa29bd290dd",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "ok": true,
+      "problems": 4,
+      "figures": 4
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "aba93620483e90b39",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "verdict": "defective",
+      "defectsFound": 2,
+      "defectsFixed": 1,
+      "remaining": [
+        "p4-sol-fig1 crop is clipped: pdfRect [62.1,49.95,486.9,688.5] was copied from p4-fig1, but on solutions.pdf p.10 the photo is placed at x 70.85-493.95, y 57.25-688.82 with the cell border at x 490.30-490.78 and the frame bottom at y 689.02-689.50. The crop cuts 7.05 pt (~29 px @300dpi) off the image's right edge (= bottom after the 90-degree rotation) and omits the cell's right border and the frame's bottom border - the published PNG has frame lines on only three sides. Correct rect, mirroring p4-fig1's margins: [62.1, 49.95, 493.98, 690.18] -> 1800x2668 px, 2668x1800 after rotation. Not fixed in the JSON because it needs a re-crop AND a re-upload of problems/nao-2026-i-11-12/p4-sol-fig1.png; editing pdfRect/width/height alone would desynchronize the JSON from the asset in the bucket, scripts/pdfcrop.py neither rotates nor uploads, and docs/Archive-Architecture.md forbids overwriting a storage key (needs a human decision on overwrite vs -v2). Lost content is featureless foreground, so no astronomically meaningful detail is missing.",
+        "Not a transcription defect, but flagging for the human reviewer: problem 3 part G asks for the radial velocity of the STAR relative to the planet, while the official solution computes 'Radialnata skorost na planetata spryamo zvezdata' (planet relative to star). The inconsistency is in the printed original and is reproduced faithfully in the JSON."
+      ]
+    },
+    "postVerificationEdits": true,
+    "fileTime": "2026-09-01T14:42:30.797643Z",
+    "fileCommittedAt": "2026-09-04T07:09:18+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

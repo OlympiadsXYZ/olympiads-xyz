@@ -1,0 +1,40 @@
+{
+  "kind": "legacy",
+  "contentHash": "0036b739915589d066f65df88ce1f4132b6090258baee5318355a5e19c5dd9c1",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:19.777Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "aed445c50afcb36f0",
+      "finishedAt": "2026-09-05T07:22:07.710864Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_a402f290-7a1",
+      "ok": false,
+      "problems": 0,
+      "figures": 0
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "abc5bed569eb07b3d",
+      "finishedAt": "2026-09-04T13:03:42.511313Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_76846dd6-a19",
+      "verdict": "fixed",
+      "defectsFound": 3,
+      "defectsFixed": 3,
+      "remaining": [
+        "Verification metadata was already pre-filled by the transcribing agent (transcription.verifiedBy = 'claude-opus-5 (adversarial)', verifiedAt = '2026-09-04', paper.status = 'review') BEFORE any verification ran — a process smell worth policing in the transcription prompt, since a killed verifier would leave a paper looking verified.",
+        "Source typo silently normalised: the solution PDF prints 'мoщността' (Latin o inside a Cyrillic word, зад. 3 б) 1.); the JSON writes the correct all-Cyrillic 'мощността'. Invisible in render, left as-is and not recorded in transcription.notes.",
+        "The source also prints the Coulomb constant as Cyrillic 'К' (U+041A) in зад. 1 а); the JSON renders it as $K$. Correct, but another invisible normalisation not recorded in notes.",
+        "Infrastructure warning for the orchestrator: the session scratchpad /private/tmp/.../scratchpad is SHARED between sibling verifier agents, and generic filenames (problems.pdf, solutions.pdf, p.txt) get overwritten mid-run by other agents. My first figure-comparison pass produced a false 'all 7 figures differ' result because a sibling replaced problems.pdf between two commands. Re-running with paper-prefixed filenames showed every figure is pixel-identical. Sibling agents should be told to namespace scratch files by paperId. Files under tmp/shards/work/verify/<paperId>/ also vanished mid-session, so something is deleting that tree too."
+      ]
+    },
+    "postVerificationEdits": false,
+    "fileTime": "2026-09-04T05:00:44.088563Z",
+    "fileCommittedAt": "2026-09-04T15:34:11+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

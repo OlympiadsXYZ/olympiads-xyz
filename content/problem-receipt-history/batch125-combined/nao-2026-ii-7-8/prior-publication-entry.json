@@ -1,0 +1,40 @@
+{
+  "kind": "legacy",
+  "contentHash": "daadc88b283eb72ac6168749a29a7904198136d3e9c8997ad5f611b77a0d1ef5",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:19.439Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a631573b58794f6f7",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "ok": true,
+      "problems": 5,
+      "figures": 7
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "ad5f941ec6af99aac",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "verdict": "fixed",
+      "defectsFound": 5,
+      "defectsFixed": 4,
+      "remaining": [
+        "p4-sol-fig1 crop is flush against its right edge: pdfRect x1=339.75pt is ~0.5pt too tight, clipping the last ~2 antialias columns of the 'Изток' label (published PNG's final column still has ink, value 135). Label remains legible. Fixing requires re-rendering AND re-uploading the PNG to the R2 figures bucket, which conflicts with the archive's never-overwrite-a-storage-key rule — left for a human decision.",
+        "p2-sol-fig1 crop's bottom row contains a 2-pixel sliver of the 'б' ascender from the body-text line below the figure (cosmetic bleed, same re-upload constraint).",
+        "Homoglyph divergence left as-is by choice: the source PDF text layer uses Latin 'A'/'B' for звезда A/B (P3) and летище A/B (P4); the JSON uses Cyrillic 'А'/'В'. Glyphs render identically and the JSON is internally consistent with its Latin LaTeX subscripts, so no change was made — flagged in case the project wants byte-exact source fidelity.",
+        "Original-source inconsistencies preserved verbatim and deliberately NOT normalised: σ printed as '5.67' with a decimal point vs '6,67' with a comma; P3 solution equations use subscript r_Б (Cyrillic Бe) for the star named B (JSON renders r_B); P4 В) derivation uses closed inequalities (≤) while the printed final answer uses open intervals."
+      ]
+    },
+    "postVerificationEdits": true,
+    "fileTime": "2026-09-01T14:49:54.337080Z",
+    "fileCommittedAt": "2026-09-04T07:09:18+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

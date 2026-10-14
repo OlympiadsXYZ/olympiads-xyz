@@ -2,7 +2,13 @@
 // validate.mjs <candidate.json> [--paper-id X] [--manifest m] [--mode candidate|final] [--quiet]
 // Mechanical checks a model cannot be trusted to do on itself. Prints a JSON
 // report; exits 1 when there is at least one error.
-import { isNativeImageCrop, nativeImageCropInfo, nativeImageCropEvidenceError } from './native-image-crop.mjs';
+import {
+  isNativeImageCrop,
+  nativeImageCropInfo,
+  nativeImageCropEvidenceError,
+} from './native-image-crop.mjs';
+import { createHash } from 'node:crypto';
+import { isDeepStrictEqual } from 'node:util';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -10,57 +16,275 @@ import { problemMetadataErrors } from '../lib/problem-classification.mjs';
 import { expectedProblemNumbers } from './source-numbering.mjs';
 import { isDocumentId, supplementarySourceErrors } from './supplements.mjs';
 import { spawnSync } from 'node:child_process';
-import { misplacedSolutionFigures, figuresBelowSolutionHeading, textLayerLines } from '../problems-to-site.mjs';
 import {
-  parseArgs, fail, readJson, compileSchema, mathSpans, splitMath, proseOnly, walkStrings, allFigures, RENDER_DPI, R2_PUBLIC,
-  BBOX_SCALE, WINDOW_PLACEHOLDER, pagePx, stripTx, pdftotextBin } from './lib.mjs';
+  misplacedSolutionFigures,
+  figuresBelowSolutionHeading,
+  textLayerLines,
+} from '../problems-to-site.mjs';
+import {
+  parseArgs,
+  fail,
+  readJson,
+  compileSchema,
+  mathSpans,
+  splitMath,
+  proseOnly,
+  walkStrings,
+  allFigures,
+  RENDER_DPI,
+  R2_PUBLIC,
+  BBOX_SCALE,
+  WINDOW_PLACEHOLDER,
+  pagePx,
+  stripTx,
+  pdftotextBin,
+} from './lib.mjs';
 
 const require = createRequire(import.meta.url);
 const katex = require('katex');
 
 const args = parseArgs(process.argv.slice(2), { flags: ['quiet'] });
 const file = args._[0];
-if (!file) fail('usage: validate.mjs <candidate.json> [--paper-id X] [--manifest m] [--mode candidate|final]');
+if (!file) {
+  fail(
+    'usage: validate.mjs <candidate.json> [--paper-id X] [--manifest m] [--mode candidate|final]'
+  );
+}
 let data;
-try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { console.log(JSON.stringify({ ok: false, errors: [{ path: '', message: `not valid JSON: ${e.message}` }] })); process.exit(1); }
+try {
+  data = JSON.parse(fs.readFileSync(file, 'utf8'));
+} catch (e) {
+  console.log(
+    JSON.stringify({
+      ok: false,
+      errors: [{ path: '', message: `not valid JSON: ${e.message}` }],
+    })
+  );
+  process.exit(1);
+}
 
-const errors = [], warnings = [];
+const errors = [],
+  warnings = [];
 const err = (p, message) => errors.push({ path: p, message });
 const warn = (p, message) => warnings.push({ path: p, message });
 const hasTx = JSON.stringify(data).includes('"tx":');
-const mode = args.mode || (hasTx || allFigures(data).some(f => !f.fig.url) ? 'candidate' : 'final');
-const manifest = args.manifest ? readJson(path.resolve(args.manifest), null) : null;
-if (args.manifest && !manifest) err('', `manifest not readable: ${args.manifest}`);
+const mode =
+  args.mode ||
+  (hasTx || allFigures(data).some(f => !f.fig.url) ? 'candidate' : 'final');
+const manifest = args.manifest
+  ? readJson(path.resolve(args.manifest), null)
+  : null;
+if (args.manifest && !manifest) {
+  err('', `manifest not readable: ${args.manifest}`);
+}
 
-// New opt-in crop evidence is checked only when its source manifest is supplied.
-if (manifest) for (const { fig, path: p } of allFigures(data)) {
-  if (!isNativeImageCrop(fig)) continue;
-  try {
-    if (fig.source || fig.url) {
-      const message = nativeImageCropEvidenceError(fig, manifest, path.dirname(path.resolve(args.manifest)));
-      if (message) err(p, message);
-    } else nativeImageCropInfo(fig, manifest, path.dirname(path.resolve(args.manifest)));
-  } catch (error) { err(p, error.message); }
+// Final native evidence is checked on an explicitly supplied working companion.
+// The raw final still goes through the unchanged final schema below.
+const nativeFinalFigures =
+  mode === 'final'
+    ? allFigures(data).filter(({ fig }) => isNativeImageCrop(fig))
+    : [];
+let nativeCompanion = null,
+  nativeCompanionRef = null;
+const nativeFinalPointers = nativeFinalFigures.map(({ path: p }) => p).sort();
+const nativeFinalBindings = [];
+let nativeFinalExact = false;
+if (args['candidate-evidence']) {
+  if (mode !== 'final') {
+    err(
+      '/candidate-evidence',
+      '--candidate-evidence is only supported in final mode'
+    );
+  } else {
+    const companionFile = path.resolve(args['candidate-evidence']);
+    try {
+      const raw = fs.readFileSync(companionFile);
+      nativeCompanion = JSON.parse(raw.toString('utf8'));
+      nativeCompanionRef = {
+        file: companionFile,
+        sha256: createHash('sha256').update(raw).digest('hex'),
+        bytes: raw.length,
+      };
+      if (!nativeCompanion?.paper || !Array.isArray(nativeCompanion.problems)) {
+        err('/candidate-evidence', 'candidate evidence is not a paper JSON');
+        nativeCompanion = null;
+      }
+    } catch (error) {
+      err(
+        '/candidate-evidence',
+        'candidate evidence is unreadable or invalid JSON: ' + error.message
+      );
+    }
+  }
+}
+if (nativeFinalFigures.length) {
+  if (!manifest) {
+    err(
+      '/candidate-evidence',
+      'final native-image-crop evidence requires --manifest'
+    );
+  }
+  if (!nativeCompanion) {
+    err(
+      '/candidate-evidence',
+      'final native-image-crop evidence requires --candidate-evidence'
+    );
+  } else {
+    const samePaper = nativeCompanion.paper.id === data.paper?.id;
+    if (!samePaper) {
+      err(
+        '/candidate-evidence',
+        'candidate evidence paper.id does not match the final'
+      );
+    }
+    const workingNativeFigures = allFigures(nativeCompanion).filter(({ fig }) =>
+      isNativeImageCrop(fig)
+    );
+    const workingPointers = workingNativeFigures.map(({ path: p }) => p).sort();
+    const samePointers = isDeepStrictEqual(
+      workingPointers,
+      nativeFinalPointers
+    );
+    if (!samePointers) {
+      err(
+        '/candidate-evidence',
+        'candidate evidence native figure pointer set differs from the final'
+      );
+    }
+    const byPointer = new Map(
+      workingNativeFigures.map(item => [item.path, item.fig])
+    );
+    for (const { fig, path: p } of nativeFinalFigures) {
+      const working = byPointer.get(p);
+      if (!working || !isDeepStrictEqual(stripTx(working), fig)) {
+        err(
+          p,
+          'candidate evidence stripped native figure differs from the final'
+        );
+        continue;
+      }
+      if (!samePaper || !samePointers || !manifest) continue;
+      try {
+        const message = nativeImageCropEvidenceError(
+          working,
+          manifest,
+          path.dirname(path.resolve(args.manifest))
+        );
+        if (message) err(p, message);
+        else {
+          nativeFinalBindings.push({
+            path: p,
+            id: fig.id,
+            file: working.tx.file,
+            sha256: working.tx.sha256,
+            remoteKey: working.tx.remoteKey,
+            strippedFigureSha256: createHash('sha256')
+              .update(JSON.stringify(stripTx(working)))
+              .digest('hex'),
+            unchangedNativeHelperVerified: true,
+          });
+        }
+      } catch (error) {
+        err(p, error.message);
+      }
+    }
+    nativeFinalExact =
+      samePaper &&
+      samePointers &&
+      nativeFinalBindings.length === nativeFinalFigures.length;
+  }
+} else if (manifest) {
+  // The existing candidate native workflow is unchanged.
+  for (const { fig, path: p } of allFigures(data)) {
+    if (!isNativeImageCrop(fig)) continue;
+    try {
+      if (fig.source || fig.url) {
+        const message = nativeImageCropEvidenceError(
+          fig,
+          manifest,
+          path.dirname(path.resolve(args.manifest))
+        );
+        if (message) err(p, message);
+      } else {
+        nativeImageCropInfo(
+          fig,
+          manifest,
+          path.dirname(path.resolve(args.manifest))
+        );
+      }
+    } catch (error) {
+      err(p, error.message);
+    }
+  }
 }
 // 1. schema
 const { validate, schema } = compileSchema(mode);
 // Candidate mode: readers may put a tx block on any object (solution, part…); promote strips them all,
 // so the schema check runs on the same stripped shape promote will write.
 const schemaInput = mode === 'candidate' ? stripTx(data) : data;
-if (!validate(schemaInput)) for (const e of validate.errors) err(e.dataPath || '', `${e.message}${e.params?.additionalProperty ? ` (${e.params.additionalProperty})` : ''}${e.params?.allowedValues ? ` [${e.params.allowedValues.join('|')}]` : ''}`);
-for (const issue of problemMetadataErrors(data, manifest)) err(issue.path, issue.message);
+if (!validate(schemaInput)) {
+  for (const e of validate.errors) {
+    err(
+      e.dataPath || '',
+      `${e.message}${
+        e.params?.additionalProperty ? ` (${e.params.additionalProperty})` : ''
+      }${
+        e.params?.allowedValues ? ` [${e.params.allowedValues.join('|')}]` : ''
+      }`
+    );
+  }
+}
+for (const issue of problemMetadataErrors(data, manifest)) {
+  err(issue.path, issue.message);
+}
 
 const paper = data.paper || {};
-for (const issue of supplementarySourceErrors(data, manifest)) err(issue.path, issue.message);
+for (const issue of supplementarySourceErrors(data, manifest)) {
+  err(issue.path, issue.message);
+}
 const paperId = args['paper-id'] || paper.id;
-if (args['paper-id'] && paper.id !== args['paper-id']) err('/paper/id', `paper.id "${paper.id}" != expected "${args['paper-id']}"`);
-if (manifest && paper.source?.archiveKey && manifest.documents?.problems?.key && paper.source.archiveKey !== manifest.documents.problems.key) err('/paper/source/archiveKey', 'does not match the prepared problems document');
-if (manifest && paper.solutionSource?.archiveKey && manifest.documents?.solutions?.key && paper.solutionSource.archiveKey !== manifest.documents.solutions.key) warn('/paper/solutionSource/archiveKey', 'does not match the prepared solutions document');
+if (args['paper-id'] && paper.id !== args['paper-id']) {
+  err('/paper/id', `paper.id "${paper.id}" != expected "${args['paper-id']}"`);
+}
+if (
+  manifest &&
+  paper.source?.archiveKey &&
+  manifest.documents?.problems?.key &&
+  paper.source.archiveKey !== manifest.documents.problems.key
+) {
+  err(
+    '/paper/source/archiveKey',
+    'does not match the prepared problems document'
+  );
+}
+if (
+  manifest &&
+  paper.solutionSource?.archiveKey &&
+  manifest.documents?.solutions?.key &&
+  paper.solutionSource.archiveKey !== manifest.documents.solutions.key
+) {
+  warn(
+    '/paper/solutionSource/archiveKey',
+    'does not match the prepared solutions document'
+  );
+}
 if (manifest && manifest.meta) {
   const m = manifest.meta;
-  if (paper.competition !== m.competition) err('/paper/competition', `"${paper.competition}" != catalogue "${m.competition}"`);
-  if (paper.subject !== m.subject) err('/paper/subject', `"${paper.subject}" != catalogue "${m.subject}"`);
-  if (paper.year !== m.year && !data.tx?.catalogDisagrees) warn('/paper/year', `${paper.year} != catalogue ${m.year} and tx.catalogDisagrees is not set`);
+  if (paper.competition !== m.competition) {
+    err(
+      '/paper/competition',
+      `"${paper.competition}" != catalogue "${m.competition}"`
+    );
+  }
+  if (paper.subject !== m.subject) {
+    err('/paper/subject', `"${paper.subject}" != catalogue "${m.subject}"`);
+  }
+  if (paper.year !== m.year && !data.tx?.catalogDisagrees) {
+    warn(
+      '/paper/year',
+      `${paper.year} != catalogue ${m.year} and tx.catalogDisagrees is not set`
+    );
+  }
 }
 
 // 2. ids, numbering, points
@@ -69,178 +293,569 @@ const expectedNumbers = expectedProblemNumbers(manifest, problems.length);
 const ids = new Set();
 problems.forEach((pr, i) => {
   const p = `/problems/${i}`;
-  if (typeof pr.id !== 'string' || !pr.id.startsWith(`${paperId}-`)) err(`${p}/id`, `must start with "${paperId}-"`);
-  else if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(pr.id)) err(`${p}/id`, 'unsafe id characters');
-  if (ids.has(pr.id)) err(`${p}/id`, `duplicate id ${pr.id}`); ids.add(pr.id);
-  if (Number.isInteger(pr.number)) { if (pr.number !== expectedNumbers[i]) err(`${p}/number`, `expected ${expectedNumbers[i]}, got ${pr.number} (use complete catalogue labels, or contiguous 1..N when labels are unavailable)`); }
-  else warn(`${p}/number`, `non-integer number "${pr.number}"`);
-  if (!pr.statement || !String(pr.statement).trim()) { if ((pr.parts || []).length || (pr.sections || []).length) warn(`${p}/statement`, 'empty statement (the printed problem is only its parts)'); else err(`${p}/statement`, 'empty statement'); }
-  else if (String(pr.statement).includes(WINDOW_PLACEHOLDER)) err(`${p}/statement`, `window placeholder "${WINDOW_PLACEHOLDER}" left unresolved (assemble.mjs did not find the statement in any window)`);
-  if (typeof pr.points === 'number' && pr.points < 0) err(p, `negative points (${pr.points}): a penalty rule printed as a problem entry is not a problem — remove this entry ({"remove": true}); its printed text, if any, goes to the end of the previous problem's statement`);
-  else if (pr.points != null) {
-    const completeSectionScore = pr.sections?.length && pr.sections.every(s => typeof s.points === 'number' && s.points >= 0)
-      && Math.abs(pr.sections.reduce((sum, s) => sum + s.points, 0) - pr.points) < 1e-9;
-    if (typeof pr.points !== 'number' || (pr.points > 200 && !completeSectionScore)) err(`${p}/points`, `implausible points ${pr.points}`);
-    else if (pr.points > 200) warn(`${p}/points`, `large source total ${pr.points} is accounted for by all native section scores`);
+  if (typeof pr.id !== 'string' || !pr.id.startsWith(`${paperId}-`)) {
+    err(`${p}/id`, `must start with "${paperId}-"`);
+  } else if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(pr.id)) {
+    err(`${p}/id`, 'unsafe id characters');
+  }
+  if (ids.has(pr.id)) err(`${p}/id`, `duplicate id ${pr.id}`);
+  ids.add(pr.id);
+  if (Number.isInteger(pr.number)) {
+    if (pr.number !== expectedNumbers[i]) {
+      err(
+        `${p}/number`,
+        `expected ${expectedNumbers[i]}, got ${pr.number} (use complete catalogue labels, or contiguous 1..N when labels are unavailable)`
+      );
+    }
+  } else warn(`${p}/number`, `non-integer number "${pr.number}"`);
+  if (!pr.statement || !String(pr.statement).trim()) {
+    if ((pr.parts || []).length || (pr.sections || []).length) {
+      warn(
+        `${p}/statement`,
+        'empty statement (the printed problem is only its parts)'
+      );
+    } else err(`${p}/statement`, 'empty statement');
+  } else if (String(pr.statement).includes(WINDOW_PLACEHOLDER)) {
+    err(
+      `${p}/statement`,
+      `window placeholder "${WINDOW_PLACEHOLDER}" left unresolved (assemble.mjs did not find the statement in any window)`
+    );
+  }
+  if (typeof pr.points === 'number' && pr.points < 0) {
+    err(
+      p,
+      `negative points (${pr.points}): a penalty rule printed as a problem entry is not a problem — remove this entry ({"remove": true}); its printed text, if any, goes to the end of the previous problem's statement`
+    );
+  } else if (pr.points != null) {
+    const completeSectionScore =
+      pr.sections?.length &&
+      pr.sections.every(s => typeof s.points === 'number' && s.points >= 0) &&
+      Math.abs(pr.sections.reduce((sum, s) => sum + s.points, 0) - pr.points) <
+        1e-9;
+    if (
+      typeof pr.points !== 'number' ||
+      (pr.points > 200 && !completeSectionScore)
+    ) {
+      err(`${p}/points`, `implausible points ${pr.points}`);
+    } else if (pr.points > 200) {
+      warn(
+        `${p}/points`,
+        `large source total ${pr.points} is accounted for by all native section scores`
+      );
+    }
   }
   const labels = new Set();
-  let partSum = 0, partsWithPoints = 0;
+  let partSum = 0,
+    partsWithPoints = 0;
   (pr.parts || []).forEach((pt, k) => {
     const q = `${p}/parts/${k}`;
-    if (labels.has(pt.label)) warn(`${q}/label`, `duplicate part label "${pt.label}"`); labels.add(pt.label);
-    if (!pt.statement || !String(pt.statement).trim()) err(`${q}/statement`, 'empty part statement');
-    if (pt.points != null) { if (typeof pt.points !== 'number' || pt.points < 0) err(`${q}/points`, `implausible points ${pt.points}`); else { partSum += pt.points; partsWithPoints++; } }
+    if (labels.has(pt.label)) {
+      warn(`${q}/label`, `duplicate part label "${pt.label}"`);
+    }
+    labels.add(pt.label);
+    if (!pt.statement || !String(pt.statement).trim()) {
+      err(`${q}/statement`, 'empty part statement');
+    }
+    if (pt.points != null) {
+      if (typeof pt.points !== 'number' || pt.points < 0) {
+        err(`${q}/points`, `implausible points ${pt.points}`);
+      } else {
+        partSum += pt.points;
+        partsWithPoints++;
+      }
+    }
     checkAnswer(pt.answer, `${q}/answer`);
   });
-  if (partsWithPoints && pr.points != null && partsWithPoints === (pr.parts || []).length && Math.abs(partSum - pr.points) > 1e-9) warn(`${p}/points`, `parts sum to ${partSum} but problem has ${pr.points} (fine if printed so; say it in tx.notes)`);
-  for (const [sections, prefix] of [[pr.sections, `${p}/sections`], [pr.solution?.sections, `${p}/solution/sections`]]) {
+  if (
+    partsWithPoints &&
+    pr.points != null &&
+    partsWithPoints === (pr.parts || []).length &&
+    Math.abs(partSum - pr.points) > 1e-9
+  ) {
+    warn(
+      `${p}/points`,
+      `parts sum to ${partSum} but problem has ${pr.points} (fine if printed so; say it in tx.notes)`
+    );
+  }
+  for (const [sections, prefix] of [
+    [pr.sections, `${p}/sections`],
+    [pr.solution?.sections, `${p}/solution/sections`],
+  ]) {
     const sectionIds = new Set();
     (sections || []).forEach((section, k) => {
       const q = `${prefix}/${k}`;
-      if (sectionIds.has(section.id)) err(`${q}/id`, `duplicate section id ${section.id}`);
+      if (sectionIds.has(section.id)) {
+        err(`${q}/id`, `duplicate section id ${section.id}`);
+      }
       sectionIds.add(section.id);
-      if (!section.statement?.trim() && !(section.parts || []).length && !(section.figures || []).length) err(q, 'empty section');
+      if (
+        !section.statement?.trim() &&
+        !(section.parts || []).length &&
+        !(section.figures || []).length
+      ) {
+        err(q, 'empty section');
+      }
       const labels = new Set();
       (section.parts || []).forEach((part, j) => {
-        if (labels.has(part.label)) err(`${q}/parts/${j}/label`, 'duplicate label within section');
+        if (labels.has(part.label)) {
+          err(`${q}/parts/${j}/label`, 'duplicate label within section');
+        }
         labels.add(part.label);
-        if (!part.statement?.trim()) err(`${q}/parts/${j}/statement`, 'empty part statement');
-        if (part.points != null && (typeof part.points !== 'number' || part.points < 0)) err(`${q}/parts/${j}/points`, 'invalid part points');
+        if (!part.statement?.trim()) {
+          err(`${q}/parts/${j}/statement`, 'empty part statement');
+        }
+        if (
+          part.points != null &&
+          (typeof part.points !== 'number' || part.points < 0)
+        ) {
+          err(`${q}/parts/${j}/points`, 'invalid part points');
+        }
         checkAnswer(part.answer, `${q}/parts/${j}/answer`);
       });
     });
   }
   for (const alias of pr.aliases || []) {
-    if (alias.sectionId != null && !pr.sections?.some(s => s.id === alias.sectionId)) err(`${p}/aliases`, `missing section ${alias.sectionId}`);
-    if (problems.some(other => other.id === alias.id)) err(`${p}/aliases`, `alias is still a problem: ${alias.id}`);
+    if (
+      alias.sectionId != null &&
+      !pr.sections?.some(s => s.id === alias.sectionId)
+    ) {
+      err(`${p}/aliases`, `missing section ${alias.sectionId}`);
+    }
+    if (problems.some(other => other.id === alias.id)) {
+      err(`${p}/aliases`, `alias is still a problem: ${alias.id}`);
+    }
   }
   checkAnswer(pr.answer, `${p}/answer`);
-  if (pr.solution && !pr.solution.incomplete && !(pr.solution.statement || '').trim() && !(pr.solution.sections || []).length) err(`${p}/solution/statement`, 'empty solution without incomplete: true');
-  if (pr.solution?.incomplete && !pr.solution.incompleteReason) warn(`${p}/solution`, 'incomplete without incompleteReason');
+  if (
+    pr.solution &&
+    !pr.solution.incomplete &&
+    !(pr.solution.statement || '').trim() &&
+    !(pr.solution.sections || []).length
+  ) {
+    err(`${p}/solution/statement`, 'empty solution without incomplete: true');
+  }
+  if (pr.solution?.incomplete && !pr.solution.incompleteReason) {
+    warn(`${p}/solution`, 'incomplete without incompleteReason');
+  }
   for (const s of pr.tx?.sourceSpans || pr.sourceSpans || []) {
-    if (!isDocumentId(s.document)) err(`${p}/tx/sourceSpans`, `unknown document "${s.document}"`);
-    else if (manifest && !manifest.documents[s.document]) err(`${p}/tx/sourceSpans`, `document "${s.document}" was not prepared`);
-    else if (manifest && (s.page < 1 || s.page > manifest.documents[s.document].pages)) err(`${p}/tx/sourceSpans`, `page ${s.page} outside ${s.document} (1..${manifest.documents[s.document].pages})`);
+    if (!isDocumentId(s.document)) {
+      err(`${p}/tx/sourceSpans`, `unknown document "${s.document}"`);
+    } else if (manifest && !manifest.documents[s.document]) {
+      err(`${p}/tx/sourceSpans`, `document "${s.document}" was not prepared`);
+    } else if (
+      manifest &&
+      (s.page < 1 || s.page > manifest.documents[s.document].pages)
+    ) {
+      err(
+        `${p}/tx/sourceSpans`,
+        `page ${s.page} outside ${s.document} (1..${
+          manifest.documents[s.document].pages
+        })`
+      );
+    }
   }
 });
-const total = problems.reduce((a, pr) => a + (typeof pr.points === 'number' ? pr.points : 0), 0);
-if (paper.totalPoints != null && problems.every(pr => typeof pr.points === 'number') && Math.abs(total - paper.totalPoints) > 1e-9) warn('/paper/totalPoints', `problems sum to ${total}, totalPoints is ${paper.totalPoints}`);
+const total = problems.reduce(
+  (a, pr) => a + (typeof pr.points === 'number' ? pr.points : 0),
+  0
+);
+if (
+  paper.totalPoints != null &&
+  problems.every(pr => typeof pr.points === 'number') &&
+  Math.abs(total - paper.totalPoints) > 1e-9
+) {
+  warn(
+    '/paper/totalPoints',
+    `problems sum to ${total}, totalPoints is ${paper.totalPoints}`
+  );
+}
 const listed = manifest?.meta?.listed?.problems;
-if (listed && problems.length !== listed) warn('/problems', `${problems.length} problem entries, the archive inventory lists ${listed} (printed sections and sub-tasks of one problem are its parts, not problems of their own)`);
-const listedParts = manifest?.meta?.listed?.parts, haveParts = problems.reduce((a, p) => a + (p.parts || []).length + (p.sections || []).reduce((sum, s) => sum + (s.parts || []).length, 0), 0);
-if (listedParts >= 3 && haveParts === 0) warn('/problems', `no parts at all, the archive inventory lists about ${listedParts} printed sub-tasks — they were folded into the statement`);
-if (manifest) for (const doc of ['source', 'solutionSource']) {
-  const d = doc === 'source' ? 'problems' : 'solutions';
-  for (const pg of paper[doc]?.pages || []) if (manifest.documents[d] && (pg < 1 || pg > manifest.documents[d].pages)) err(`/paper/${doc}/pages`, `page ${pg} outside ${d} (1..${manifest.documents[d].pages})`);
+if (listed && problems.length !== listed) {
+  warn(
+    '/problems',
+    `${problems.length} problem entries, the archive inventory lists ${listed} (printed sections and sub-tasks of one problem are its parts, not problems of their own)`
+  );
+}
+const listedParts = manifest?.meta?.listed?.parts,
+  haveParts = problems.reduce(
+    (a, p) =>
+      a +
+      (p.parts || []).length +
+      (p.sections || []).reduce((sum, s) => sum + (s.parts || []).length, 0),
+    0
+  );
+if (listedParts >= 3 && haveParts === 0) {
+  warn(
+    '/problems',
+    `no parts at all, the archive inventory lists about ${listedParts} printed sub-tasks — they were folded into the statement`
+  );
+}
+if (manifest) {
+  for (const doc of ['source', 'solutionSource']) {
+    const d = doc === 'source' ? 'problems' : 'solutions';
+    for (const pg of paper[doc]?.pages || []) {
+      if (
+        manifest.documents[d] &&
+        (pg < 1 || pg > manifest.documents[d].pages)
+      ) {
+        err(
+          `/paper/${doc}/pages`,
+          `page ${pg} outside ${d} (1..${manifest.documents[d].pages})`
+        );
+      }
+    }
+  }
 }
 function checkAnswer(a, p) {
   if (!a) return;
-  if (a.kind === 'numeric' && typeof a.value !== 'number') err(`${p}/value`, 'numeric answer needs a number value');
-  if (a.kind === 'numeric' && a.tolerance != null && a.tolerance < 0) err(`${p}/tolerance`, 'negative tolerance');
-  if (a.kind === 'expression' && !a.latex) warn(`${p}/latex`, 'expression answer without latex');
-  if (a.kind === 'choice' && a.correct == null) warn(`${p}/correct`, 'choice answer without correct');
+  if (a.kind === 'numeric' && typeof a.value !== 'number') {
+    err(`${p}/value`, 'numeric answer needs a number value');
+  }
+  if (a.kind === 'numeric' && a.tolerance != null && a.tolerance < 0) {
+    err(`${p}/tolerance`, 'negative tolerance');
+  }
+  if (a.kind === 'expression' && !a.latex) {
+    warn(`${p}/latex`, 'expression answer without latex');
+  }
+  if (a.kind === 'choice' && a.correct == null) {
+    warn(`${p}/correct`, 'choice answer without correct');
+  }
 }
 
 // 3. text fields: raw HTML, << >>, math
 // only tags HTML actually has: a printed "<Idea 1>" or "<T>" in prose is text the site escapes (problems-to-site
 // mdText writes \<), not markup (apho-2026-experiment-e1 parked on "<Idea 1>" in the solution)
-const HTML_TAGS = 'a|abbr|b|big|blockquote|br|center|code|dd|del|div|dl|dt|em|font|h[1-6]|hr|i|img|ins|kbd|li|math|mi|mn|mo|mrow|msub|msup|msubsup|mfrac|ol|p|pre|s|small|span|strike|strong|sub|sup|table|tbody|td|th|thead|tr|tt|u|ul|var';
+const HTML_TAGS =
+  'a|abbr|b|big|blockquote|br|center|code|dd|del|div|dl|dt|em|font|h[1-6]|hr|i|img|ins|kbd|li|math|mi|mn|mo|mrow|msub|msup|msubsup|mfrac|ol|p|pre|s|small|span|strike|strong|sub|sup|table|tbody|td|th|thead|tr|tt|u|ul|var';
 const HTML = new RegExp(`</?(?:${HTML_TAGS})(?:\\s[^<>]*)?/?>`, 'i');
 let mathCount = 0;
 walkStrings(data, (p, s) => {
-  if (/\/(tx|classification|sourceLayout)\b/.test(p) || /\/(url|archiveKey|id|from|to)$/.test(p)) return;
-  const rendered = /\/(statement|statementAfterParts|statementAfter|caption|alt|title|label)$/.test(p) && !/\/answer\//.test(p);
+  if (
+    /\/(tx|classification|sourceLayout)\b/.test(p) ||
+    /\/(url|archiveKey|id|from|to)$/.test(p)
+  ) {
+    return;
+  }
+  const rendered =
+    /\/(statement|statementAfterParts|statementAfter|caption|alt|title|label)$/.test(
+      p
+    ) && !/\/answer\//.test(p);
   // A missing JSON/JS escape can turn \tau, \beta, \frac or \rho into a control
   // character plus the rest of the command. KaTeX accepts some of those as
   // ordinary letters, so check the decoded string before its math is rendered.
   if (rendered || /\/answer\/latex$/.test(p)) {
-    if (/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/u.test(s))
-      err(p, 'control character in rendered text (possible unescaped LaTeX command such as \\beta or \\frac)');
-    else if ((/\/answer\/latex$/.test(p) && /[\t\r]/u.test(s)) || mathSpans(s).some(span => /[\t\r]/u.test(span.inner)))
-      err(p, 'tab or carriage return inside math (possible unescaped LaTeX command such as \\tau or \\rho)');
-    else if (/\t(?:au|heta|imes|ext|ilde|op|riangle)(?=\b|[_^{}\\])/u.test(s) || /\r(?:ho|ight|angle)(?=\b|[_^{}\\])/u.test(s))
-      err(p, 'control character followed by a LaTeX command fragment (check escaping of \\tau, \\theta or \\rho)');
+    if (
+      Array.from(s).some(character => {
+        const code = character.charCodeAt(0);
+        return (
+          code <= 8 ||
+          code === 11 ||
+          code === 12 ||
+          (code >= 14 && code <= 31) ||
+          code === 127
+        );
+      })
+    ) {
+      err(
+        p,
+        'control character in rendered text (possible unescaped LaTeX command such as \\beta or \\frac)'
+      );
+    } else if (
+      (/\/answer\/latex$/.test(p) && /[\t\r]/u.test(s)) ||
+      mathSpans(s).some(span => /[\t\r]/u.test(span.inner))
+    ) {
+      err(
+        p,
+        'tab or carriage return inside math (possible unescaped LaTeX command such as \\tau or \\rho)'
+      );
+    } else if (
+      /\t(?:au|heta|imes|ext|ilde|op|riangle)(?=\b|[_^{}\\])/u.test(s) ||
+      /\r(?:ho|ight|angle)(?=\b|[_^{}\\])/u.test(s)
+    ) {
+      err(
+        p,
+        'control character followed by a LaTeX command fragment (check escaping of \\tau, \\theta or \\rho)'
+      );
+    }
   }
   const prose = proseOnly(s);
-  if (HTML.test(prose)) err(p, `raw HTML tag in prose: ${HTML.exec(prose)[0].slice(0, 40)}`);
-  if (/<<|>>/.test(prose)) err(p, 'bare << or >> outside math (MDX parses it as JSX); use $\\ll$ / $\\gg$');
+  if (HTML.test(prose)) {
+    err(p, `raw HTML tag in prose: ${HTML.exec(prose)[0].slice(0, 40)}`);
+  }
+  if (/<<|>>/.test(prose)) {
+    err(
+      p,
+      'bare << or >> outside math (MDX parses it as JSX); use $\\ll$ / $\\gg$'
+    );
+  }
   // bare LaTeX in prose: "(23^{h}56^{m})" — MDX reads {h} as a JavaScript expression and the site build dies.
   // answer.latex fields are raw LaTeX by design and notes are never rendered as MDX.
   // Only fields the generator renders as MDX prose can break the build; answer fields, notes and caveats get a warning.
-  const bare = /[{}]/.test(prose) ? `braces outside math (MDX treats {…} as an expression): ${/[^{}]{0,20}[{}][^{}]{0,20}/.exec(prose)?.[0]?.trim()} — put the LaTeX inside $…$`
-    : /\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.test(prose) ? `LaTeX command outside math (${/\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.exec(prose)?.[0].trim()}); put it inside $…$ or write it as text` : null;
-  if (bare && !/\/(latex|notes|caveat)$/.test(p) && !/\/answer\/(value|equivalentForms\/\d+)$/.test(p)) (rendered ? err : warn)(p, bare);
-  if (/<\S/.test(prose)) warn(p, `"<" glued to what follows outside math (${/.{0,12}<\S.{0,12}/.exec(prose)?.[0]?.trim()}) — the site escapes it; check it is prose, not a tag or a formula`);
-  if (/\/parts\/\d+\/statement$/.test(p) && /\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\]\s*$/u.test(s)) warn(p, 'printed points marker left at the end of the part text; the points field is canonical and the page would show it twice');
+  const bare = /[{}]/.test(prose)
+    ? `braces outside math (MDX treats {…} as an expression): ${/[^{}]{0,20}[{}][^{}]{0,20}/
+        .exec(prose)?.[0]
+        ?.trim()} — put the LaTeX inside $…$`
+    : /\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.test(prose)
+    ? `LaTeX command outside math (${/\\[a-zA-Z]{2,}|\\[,;:!]|\\ /
+        .exec(prose)?.[0]
+        .trim()}); put it inside $…$ or write it as text`
+    : null;
+  if (
+    bare &&
+    !/\/(latex|notes|caveat)$/.test(p) &&
+    !/\/answer\/(value|equivalentForms\/\d+)$/.test(p)
+  ) {
+    (rendered ? err : warn)(p, bare);
+  }
+  if (/<\S/.test(prose)) {
+    warn(
+      p,
+      `"<" glued to what follows outside math (${/.{0,12}<\S.{0,12}/
+        .exec(prose)?.[0]
+        ?.trim()}) — the site escapes it; check it is prose, not a tag or a formula`
+    );
+  }
+  if (
+    /\/parts\/\d+\/statement$/.test(p) &&
+    /\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\]\s*$/u.test(s)
+  ) {
+    warn(
+      p,
+      'printed points marker left at the end of the part text; the points field is canonical and the page would show it twice'
+    );
+  }
   // unbalanced single dollars: after removing the recognised spans nothing may contain a lone $
-  const rest = splitMath(s).filter(x => !x.math&&!x.code).map(x => x.text).join('');
-  if (/\$/.test(rest.replace(/\\\$/g, ''))) err(p, 'unbalanced $ (math delimiter without a closing one on the same line)');
+  const rest = splitMath(s)
+    .filter(x => !x.math && !x.code)
+    .map(x => x.text)
+    .join('');
+  if (/\$/.test(rest.replace(/\\\$/g, ''))) {
+    err(
+      p,
+      'unbalanced $ (math delimiter without a closing one on the same line)'
+    );
+  }
   for (const span of mathSpans(s)) {
     mathCount++;
-    try { katex.renderToString(span.inner, { throwOnError: true, displayMode: span.display, strict: 'ignore' }); }
-    catch (e) { err(p, `KaTeX: ${String(e.message).replace(/^KaTeX parse error: /, '').slice(0, 120)} in ${span.raw.slice(0, 60)}`); }
+    try {
+      katex.renderToString(span.inner, {
+        throwOnError: true,
+        displayMode: span.display,
+        strict: 'ignore',
+      });
+    } catch (e) {
+      err(
+        p,
+        `KaTeX: ${String(e.message)
+          .replace(/^KaTeX parse error: /, '')
+          .slice(0, 120)} in ${span.raw.slice(0, 60)}`
+      );
+    }
   }
 });
 
 // 4. figures
-if (data.tx?.window) err('/tx/window', 'candidate is a page-window part; run assemble.mjs before validating');
+if (data.tx?.window) {
+  err(
+    '/tx/window',
+    'candidate is a page-window part; run assemble.mjs before validating'
+  );
+}
 const figIds = new Set();
 for (const { fig, path: p } of allFigures(data)) {
-  if (figIds.has(fig.id)) err(`${p}/id`, `duplicate figure id ${fig.id}`); figIds.add(fig.id);
-  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(fig.id || '')) err(`${p}/id`, 'figure id must be a lower-case slug (pN-figM / pN-sol-figM)');
-  if (fig.url && !fig.url.startsWith(`${R2_PUBLIC}/problems/${paperId}/`)) warn(`${p}/url`, `url is not under ${R2_PUBLIC}/problems/${paperId}/`);
+  if (figIds.has(fig.id)) err(`${p}/id`, `duplicate figure id ${fig.id}`);
+  figIds.add(fig.id);
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(fig.id || '')) {
+    err(
+      `${p}/id`,
+      'figure id must be a lower-case slug (pN-figM / pN-sol-figM)'
+    );
+  }
+  if (fig.url && !fig.url.startsWith(`${R2_PUBLIC}/problems/${paperId}/`)) {
+    warn(`${p}/url`, `url is not under ${R2_PUBLIC}/problems/${paperId}/`);
+  }
   if (!fig.url && !fig.tx?.bbox) err(p, 'figure has neither url nor tx.bbox');
   if (fig.tx) {
     const t = fig.tx;
-    if (!isDocumentId(t.document)) err(`${p}/tx/document`, `unknown document "${t.document}"`);
-    if (!Number.isInteger(t.page) || t.page < 1) err(`${p}/tx/page`, 'page must be a positive integer');
+    if (!isDocumentId(t.document)) {
+      err(`${p}/tx/document`, `unknown document "${t.document}"`);
+    }
+    if (!Number.isInteger(t.page) || t.page < 1) {
+      err(`${p}/tx/page`, 'page must be a positive integer');
+    }
     const b = t.bbox;
     // Boxes are permille of the page (0..1000 on each axis), see lib.mjs BBOX_SCALE.
-    if (!Array.isArray(b) || b.length !== 4 || b.some(v => typeof v !== 'number')) err(`${p}/tx/bbox`, 'bbox must be [x0,y0,x1,y1] numbers');
-    else {
-      if (b[0] < 0 || b[1] < 0 || b[2] > BBOX_SCALE || b[3] > BBOX_SCALE) err(`${p}/tx/bbox`, `box [${b}] outside 0..${BBOX_SCALE} permille of the page (boxes are page-relative, not pixels)`);
-      if (b[2] <= b[0] || b[3] <= b[1]) err(`${p}/tx/bbox`, `box [${b}] has no area (x1 > x0 and y1 > y0 required)`);
-      else if (b[2] - b[0] < 15 || b[3] - b[1] < 15) err(`${p}/tx/bbox`, `box too small (${b[2] - b[0]}x${b[3] - b[1]} permille)`);
-      else if ((b[2] - b[0]) * (b[3] - b[1]) > 0.85 * BBOX_SCALE * BBOX_SCALE) warn(`${p}/tx/bbox`, 'box covers >85% of the page — is this really a figure?');
+    if (
+      !Array.isArray(b) ||
+      b.length !== 4 ||
+      b.some(v => typeof v !== 'number')
+    ) {
+      err(`${p}/tx/bbox`, 'bbox must be [x0,y0,x1,y1] numbers');
+    } else {
+      if (b[0] < 0 || b[1] < 0 || b[2] > BBOX_SCALE || b[3] > BBOX_SCALE) {
+        err(
+          `${p}/tx/bbox`,
+          `box [${b}] outside 0..${BBOX_SCALE} permille of the page (boxes are page-relative, not pixels)`
+        );
+      }
+      if (b[2] <= b[0] || b[3] <= b[1]) {
+        err(
+          `${p}/tx/bbox`,
+          `box [${b}] has no area (x1 > x0 and y1 > y0 required)`
+        );
+      } else if (b[2] - b[0] < 15 || b[3] - b[1] < 15) {
+        err(
+          `${p}/tx/bbox`,
+          `box too small (${b[2] - b[0]}x${b[3] - b[1]} permille)`
+        );
+      } else if (
+        (b[2] - b[0]) * (b[3] - b[1]) >
+        0.85 * BBOX_SCALE * BBOX_SCALE
+      ) {
+        warn(
+          `${p}/tx/bbox`,
+          'box covers >85% of the page — is this really a figure?'
+        );
+      }
       const doc = manifest?.documents?.[t.document];
       if (doc) {
-        if (!Number.isInteger(t.page) || t.page < 1 || t.page > doc.pages) err(`${p}/tx/page`, `page ${t.page} outside ${t.document} (1..${doc.pages})`);
-        else if (!doc.pageSizes?.[t.page - 1]) err(`${p}/tx/page`, `no page geometry for ${t.document} p.${t.page} in the manifest`);
-        else {
-          const { w, h } = pagePx(doc.pageSizes[t.page - 1], manifest.renderDpi || RENDER_DPI);
-          const pw = (b[2] - b[0]) * w / BBOX_SCALE, ph = (b[3] - b[1]) * h / BBOX_SCALE;
-          if (pw < 20 || ph < 20) err(`${p}/tx/bbox`, `box is only ${Math.round(pw)}x${Math.round(ph)} px on the ${manifest.renderDpi || RENDER_DPI}-dpi page`);
+        if (!Number.isInteger(t.page) || t.page < 1 || t.page > doc.pages) {
+          err(
+            `${p}/tx/page`,
+            `page ${t.page} outside ${t.document} (1..${doc.pages})`
+          );
+        } else if (!doc.pageSizes?.[t.page - 1]) {
+          err(
+            `${p}/tx/page`,
+            `no page geometry for ${t.document} p.${t.page} in the manifest`
+          );
+        } else {
+          const { w, h } = pagePx(
+            doc.pageSizes[t.page - 1],
+            manifest.renderDpi || RENDER_DPI
+          );
+          const pw = ((b[2] - b[0]) * w) / BBOX_SCALE,
+            ph = ((b[3] - b[1]) * h) / BBOX_SCALE;
+          if (pw < 20 || ph < 20) {
+            err(
+              `${p}/tx/bbox`,
+              `box is only ${Math.round(pw)}x${Math.round(ph)} px on the ${
+                manifest.renderDpi || RENDER_DPI
+              }-dpi page`
+            );
+          }
         }
       }
     }
-    if (t.dryRun) warn(`${p}/tx`, 'figure comes from figures.mjs --dry-run; receipt.mjs will refuse it');
+    if (t.dryRun) {
+      warn(
+        `${p}/tx`,
+        'figure comes from figures.mjs --dry-run; receipt.mjs will refuse it'
+      );
+    }
   }
   if (!fig.alt) warn(`${p}/alt`, 'figure without alt text');
 }
 // a figure of the official solution kept in the statement or a part would be shown outside the solution spoiler;
 // the site moves it at render time (problems-to-site.mjs misplacedSolutionFigures), the candidate should not need that
-const WHY_SOLUTION = { role: 'its explicit source-read role is solution', id: 'its id names a solution crop', document: 'it is cropped from the solutions document', listed: 'problems-to-site.mjs SOLUTION_FIGURES lists it', position: 'it lies at or after the first figure of this problem\'s solution in the combined problems+solutions PDF' };
+const WHY_SOLUTION = {
+  role: 'its explicit source-read role is solution',
+  id: 'its id names a solution crop',
+  document: 'it is cropped from the solutions document',
+  listed: 'problems-to-site.mjs SOLUTION_FIGURES lists it',
+  position:
+    "it lies at or after the first figure of this problem's solution in the combined problems+solutions PDF",
+};
 problems.forEach((pr, i) => {
-  for (const m of misplacedSolutionFigures(paper, pr)) warn(`/problems/${i}/${m.path}`, `figure ${m.fig.id} belongs to the official solution (${WHY_SOLUTION[m.reason]}) but is listed under the ${m.where}; move it to solution.figures (the site shows it only inside the solution spoiler)`);
+  for (const m of misplacedSolutionFigures(paper, pr)) {
+    warn(
+      `/problems/${i}/${m.path}`,
+      `figure ${m.fig.id} belongs to the official solution (${
+        WHY_SOLUTION[m.reason]
+      }) but is listed under the ${
+        m.where
+      }; move it to solution.figures (the site shows it only inside the solution spoiler)`
+    );
+  }
 });
 // A combined problems+solutions PDF whose solution has no figure of its own: the rules above cannot tell the solution's
 // drawing from the statement's (spba-2025-ii-7-8-theo p4). The PDF's text layer can: a statement figure below its own
 // problem's printed «Решение» heading is flagged for review (a given data sheet printed after the solution stays).
-const problemsPdf = manifest && !manifest.documents?.solutions && manifest.documents?.problems?.file
-  ? path.join(path.dirname(path.resolve(args.manifest)), manifest.documents.problems.file) : null;
+const problemsPdf =
+  manifest &&
+  !manifest.documents?.solutions &&
+  manifest.documents?.problems?.file
+    ? path.join(
+        path.dirname(path.resolve(args.manifest)),
+        manifest.documents.problems.file
+      )
+    : null;
 if (problemsPdf && fs.existsSync(problemsPdf)) {
-  const r = spawnSync(pdftotextBin(), ['-enc', 'UTF-8', '-tsv', problemsPdf, '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
+  const r = spawnSync(
+    pdftotextBin(),
+    ['-enc', 'UTF-8', '-tsv', problemsPdf, '-'],
+    {
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }
+  );
   const layer = r.status === 0 ? textLayerLines(r.stdout) : null;
-  if (layer) problems.forEach((pr, i) => {
-    for (const m of figuresBelowSolutionHeading(paper, pr, layer)) warn(`/problems/${i}/${m.path}`, `figure ${m.fig.id} lies below this problem's printed solution heading ("${m.heading.text}", page ${m.heading.page}) in the combined problems+solutions PDF; if it is the solution's drawing, move it to solution.figures — a given data sheet printed after the solution stays in the ${m.where}`);
-  });
+  if (layer) {
+    problems.forEach((pr, i) => {
+      for (const m of figuresBelowSolutionHeading(paper, pr, layer)) {
+        warn(
+          `/problems/${i}/${m.path}`,
+          `figure ${m.fig.id} lies below this problem's printed solution heading ("${m.heading.text}", page ${m.heading.page}) in the combined problems+solutions PDF; if it is the solution's drawing, move it to solution.figures — a given data sheet printed after the solution stays in the ${m.where}`
+        );
+      }
+    });
+  }
 }
 
 const report = {
-  ok: errors.length === 0, mode, file: path.resolve(file), paperId,
-  stats: { problems: problems.length, parts: problems.reduce((a, p) => a + (p.parts || []).length + (p.sections || []).reduce((sum, s) => sum + (s.parts || []).length, 0), 0), figures: figIds.size, mathSpans: mathCount, solutions: problems.filter(p => p.solution?.statement || p.solution?.sections?.length).length, incomplete: problems.filter(p => p.solution?.incomplete).length },
-  errors, warnings,
+  ok: errors.length === 0,
+  mode,
+  file: path.resolve(file),
+  paperId,
+  stats: {
+    problems: problems.length,
+    parts: problems.reduce(
+      (a, p) =>
+        a +
+        (p.parts || []).length +
+        (p.sections || []).reduce((sum, s) => sum + (s.parts || []).length, 0),
+      0
+    ),
+    figures: figIds.size,
+    mathSpans: mathCount,
+    solutions: problems.filter(
+      p => p.solution?.statement || p.solution?.sections?.length
+    ).length,
+    incomplete: problems.filter(p => p.solution?.incomplete).length,
+  },
+  finalNativeEvidenceVerified:
+    mode === 'final' &&
+    nativeFinalFigures.length > 0 &&
+    nativeFinalExact &&
+    errors.length === 0,
+  nativeFinalEvidence: {
+    companion: nativeCompanionRef,
+    nativePointers: nativeFinalPointers,
+    bindings: nativeFinalBindings,
+    exactStrippedNativeFigures: nativeFinalExact,
+    unchangedFinalSchema: true,
+    unchangedNativeHelper: true,
+  },
+  errors,
+  warnings,
 };
 if (!args.quiet) console.log(JSON.stringify(report, null, 2));
-else console.log(`${report.ok ? 'OK' : 'FAIL'} ${paperId}: ${errors.length} error(s), ${warnings.length} warning(s)`);
+else {
+  console.log(
+    `${report.ok ? 'OK' : 'FAIL'} ${paperId}: ${errors.length} error(s), ${
+      warnings.length
+    } warning(s)`
+  );
+}
 process.exit(report.ok ? 0 : 1);

@@ -1,0 +1,40 @@
+{
+  "kind": "legacy",
+  "contentHash": "222223f10db36bd5d988ebbbb9cc3bbfd57bb67f185e3e35c7a1529ebe2c867a",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:20.793Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a4cfec217e5105cb5",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "ok": true,
+      "problems": 3,
+      "figures": 4
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "ab87181a6b46d7f5c",
+      "finishedAt": "2026-09-01T14:37:06.386754Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_fb578355-8cc",
+      "verdict": "fixed",
+      "defectsFound": 3,
+      "defectsFixed": 3,
+      "remaining": [
+        "paper.round = \"Есенно състезание\" contradicts docs/Archive-Schema.md §3.4, which maps that value to null because it duplicates competition: \"ESF\" (есенното състезание is a competition, not a round). All 7 ESF papers in content/problems/physics/ESF/ do this, so it is a family-wide convention call — I left it rather than desynchronize this one file from its siblings. Needs a decision, then a sweep across all ESF papers.",
+        "Problem 3's footnote \"*Резултатите за времената закръгляйте до десетки милисекунди (0,01 s)\" is printed AFTER part б) on the page but is stored at the end of problem.statement, so it renders before the parts. It applies to the whole problem so the placement is defensible; flagging only so a human confirms the house convention for trailing per-problem notes.",
+        "Deliberate normalization, noted so nobody 're-fixes' it: the source prints Cyrillic 'Ф' for optical power; the JSON uses \\Phi (visually identical). Likewise \\mathrm{T} for the Cyrillic 'Т' in the Тобщ table headers, and Latin A/B/O/F/X/Y for the source's mixed Cyrillic/Latin point labels.",
+        "Out of scope but worth a follow-up: content/problems/physics/ESF/2026/esf-2026-esenno-9.json carries year: 2026 while all six siblings from the same archive folder use 2025, so the ESF family is currently split across two year directories. Its own title page reads '2025/2026 г' (ambiguous) rather than the unambiguous '7 – 9 ноември 2025 г.' printed on this paper, so it is not clearly wrong — but the family should be made consistent."
+      ]
+    },
+    "postVerificationEdits": false,
+    "fileTime": "2026-09-01T13:39:11.036597Z",
+    "fileCommittedAt": "2026-09-01T07:36:41-07:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

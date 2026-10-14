@@ -1,0 +1,43 @@
+{
+  "kind": "legacy",
+  "contentHash": "1e4a8f760d9f72fefee1d906261f9bf239ad72d951508cee8cdb85491277eaed",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:18.670Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a70aa80771f5e0cf1",
+      "finishedAt": "2026-09-05T21:30:54.567Z",
+      "finishedAtSource": "transcript",
+      "run": "wf_e7d4406c-985",
+      "ok": false,
+      "problems": 3,
+      "figures": 6
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "acd11d4f6dbb2c115",
+      "finishedAt": "2026-09-05T21:10:34.068Z",
+      "finishedAtSource": "transcript",
+      "run": "wf_231964e0-d5d",
+      "verdict": "fixed",
+      "defectsFound": 4,
+      "defectsFixed": 4,
+      "remaining": [
+        "JSON was complete, not truncated: 3 problems, all parts, all 3 solutions, 6 figures — nothing missing, nothing invented.",
+        "All 4 defects were the same class: the transcriber silently CORRECTED source typos instead of preserving them. Restored verbatim: p1 solution 'От третия закон' → 'От третия закона на Кеплер'; p3 solution 'наблюдаваме със спектрограф' → 'спектограф', 'процепът на спектрографа' → 'спектографа', 'по големина е близко до' → 'близо до получените величини'. All four added to transcription.notes.",
+        "Verified verbatim against rendered pages AND pdftotext layer by token diff: problem statements, all parts, all three solutions, both tables (Регул/Слънце table and the Δv1/Δv2 table) cell-for-cell, and the Справочни данни block. Zero substantive divergences beyond the four above.",
+        "Point values correct: 15/15/15 = 45; each criteria list sums to 15 and matches the printed criteria verbatim (including the source typos 'За правилен метод за определение на периода на кораба' and 'За пресмятанена параметрите').",
+        "All 6 figure URLs return HTTP 200; each PNG downloaded and visually inspected — correct content, correctly de-rotated (p1-fig1), no clipping (crop rect 164.25–486.9 × 69.75–717.75 pt fully encloses the page-3 ink bbox 171.45–479.25 × 76.05–710.55 pt), no swallowed body text.",
+        "paper.year/round/grade match page 1: 2017, 'III кръг (национален)' from 'Национален кръг', grade '11-12' from 'Възрастова група XI-XII клас'. Schema validates. No bare << or >>, no raw HTML, LaTeX delimiters and braces balanced.",
+        "Source errors deliberately preserved (already in notes): 400 km/s vs 400 m/s for granule velocity, x_b vs x_P for the same quantity, Δλ_{H_a} vs Δλ_{H_α}, V_S reused for two different quantities, 'Скорост та Марс', gravitational-constant units 'м³.кг/с²'."
+      ]
+    },
+    "postVerificationEdits": false,
+    "fileTime": "2026-09-05T21:09:49.451909Z",
+    "fileCommittedAt": "2026-09-06T00:31:49+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

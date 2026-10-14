@@ -40,81 +40,124 @@ const args = parseArgs(process.argv.slice(2), {
   flags: ['replace', 'no-approve'],
 });
 const paperId = args._[0];
-if (!paperId || !args.candidate || !args.receipt)
+if (!paperId || !args.candidate || !args.receipt) {
   fail(
     'usage: promote.mjs <paperId> --candidate <f> --receipt <r> [--replace] [--no-approve]'
   );
+}
 const manifest = readManifest(paperId);
 if (!manifest) fail(`no manifest for ${paperId}`);
 const candidate = readJson(path.resolve(args.candidate), null);
 const receipt = readJson(path.resolve(args.receipt), null);
 if (!candidate || !receipt) fail('candidate or receipt not readable');
-if (receipt.paperId !== paperId || candidate.paper?.id !== paperId)
+if (receipt.paperId !== paperId || candidate.paper?.id !== paperId) {
   fail('paper id mismatch between arguments, candidate and receipt');
-if (receipt.verdict !== 'pass')
+}
+if (receipt.verdict !== 'pass') {
   fail(`receipt verdict is "${receipt.verdict}", not pass — nothing promoted`);
-if (receipt.defects?.length)
+}
+if (receipt.defects?.length) {
   fail(
     `receipt lists ${receipt.defects.length} unresolved defect(s) — nothing promoted`
   );
-if (receipt.blockers?.length)
+}
+if (receipt.blockers?.length) {
   fail(`receipt lists blockers: ${receipt.blockers.join('; ')}`);
+}
 if (
   !receipt.reviewer?.provider ||
   !receipt.reviewer?.model ||
   !receipt.reviewer?.requestId
-)
+) {
   fail('receipt does not identify the reviewer');
+}
 if (
   receipt.independence &&
   !receipt.independence.independent &&
   !receipt.independence.allowSameModel
-)
+) {
   fail('receipt records a same-model check that was not explicitly allowed');
-if (sha256File(path.resolve(args.candidate)) !== receipt.candidateSha256)
+}
+if (sha256File(path.resolve(args.candidate)) !== receipt.candidateSha256) {
   fail('candidate bytes changed since the receipt was written');
+}
 if (
   receipt.checkerCandidateSha256 &&
   receipt.checkerCandidateSha256 !== receipt.candidateSha256
-)
+) {
   fail('receipt was issued for a candidate the checker did not check');
+}
 const figProblems = figureEvidenceProblems(
   candidate,
   manifest,
   path.dirname(manifestFile(paperId))
 );
-if (figProblems.length)
+if (figProblems.length) {
   fail(
     `figure evidence missing: ${figProblems
       .map(p => `${p.path}: ${p.message}`)
       .join('; ')}`
   );
-for (const message of sourceHashErrors(manifest, receipt.sourceHashes))
+}
+for (const message of sourceHashErrors(manifest, receipt.sourceHashes)) {
   fail(message);
+}
 for (const message of sourceConversionProblems(
   manifest,
   path.dirname(manifestFile(paperId)),
   receipt.sourceConversions || {}
-))
+)) {
   fail(message);
+}
 for (const message of sourceReadScopeProblems(
   manifest,
   candidate,
   receipt.sourceReadScopes || {}
-))
+)) {
   fail(message);
-for (const issue of supplementarySourceErrors(candidate, manifest))
+}
+for (const issue of supplementarySourceErrors(candidate, manifest)) {
   fail(`${issue.path}: ${issue.message}`);
+}
 
 if (receipt.renderDpi !== undefined) {
   let actualDpi;
   try {
-    actualDpi = renderDpiFor(manifest);
+    actualDpi = renderDpiFor(
+      manifest,
+      receipt.readerEvidence?.nativeCompanionRenderWitness ||
+        receipt.readerEvidence?.nativeOriginalBindings?.solutions
+          ?.nativeOriginalKind === 'DOCX'
+        ? {
+            evidence: receipt.readerEvidence,
+            sourceDirectory: path.dirname(manifestFile(paperId)),
+            candidate,
+            renderWitness: receipt.readerEvidence.nativeCompanionRenderWitness,
+          }
+        : null
+    );
   } catch (error) {
     fail(error.message);
   }
-  if (receipt.renderDpi !== actualDpi)
+  if (receipt.renderDpi !== actualDpi) {
     fail('Source renderDpi changed since the receipt was written');
+  }
+  const roles = Object.entries(manifest.documents || {});
+  const mixedDocumentDpi = roles.some(
+    ([, doc]) => doc.renderDpi !== undefined && doc.renderDpi !== actualDpi
+  );
+  if (mixedDocumentDpi || receipt.documentRenderDpi !== undefined) {
+    const recorded = receipt.documentRenderDpi;
+    if (
+      !recorded ||
+      typeof recorded !== 'object' ||
+      Array.isArray(recorded) ||
+      Object.keys(recorded).length !== roles.length ||
+      roles.some(([id, doc]) => recorded[id] !== (doc.renderDpi ?? actualDpi))
+    ) {
+      fail('Source documentRenderDpi changed or is missing from the receipt');
+    }
+  }
 }
 const prov = provenanceFor(candidate, {
   reviewer: receipt.reviewer,
@@ -127,7 +170,7 @@ const prov = provenanceFor(candidate, {
   ...(receipt.renderDpi !== undefined ? { renderDpi: receipt.renderDpi } : {}),
 });
 const final = buildFinalPaper(candidate, prov);
-if (final.contentHash !== receipt.contentHash)
+if (final.contentHash !== receipt.contentHash) {
   fail(
     `content hash mismatch: receipt ${receipt.contentHash.slice(
       0,
@@ -137,13 +180,15 @@ if (final.contentHash !== receipt.contentHash)
       12
     )}… (schema or candidate changed since the receipt)`
   );
+}
 const { validate } = compileSchema('final');
-if (!validate(final.data))
+if (!validate(final.data)) {
   fail(
     `final paper fails schema before writing: ${JSON.stringify(
       validate.errors.slice(0, 3)
     )}`
   );
+}
 
 const target = contentPathFor(paperId, {
   subject: final.data.paper.subject,
@@ -166,13 +211,14 @@ try {
 } catch (error) {
   fail(error.message);
 }
-if (fs.existsSync(target) && !args.replace)
+if (fs.existsSync(target) && !args.replace) {
   fail(
     `${path.relative(
       ROOT,
       target
     )} already exists; pass --replace to overwrite (the publication ledger will then need a new approval)`
   );
+}
 // a replacement whose year (or subject/competition) changed lands in another folder: the earlier file goes once the
 // new one is verified, or the tree holds the paper id twice (nao-2002-i-11-12 re-filed from 2001 to 2002)
 const previous = args.replace
@@ -200,6 +246,38 @@ fs.mkdirSync(path.dirname(target), { recursive: true });
   // atomic, with the same rename retry writeJson has (the ship and other workers read this tree)
   const tmp = `${target}.${process.pid}.partial`;
   fs.writeFileSync(tmp, final.bytes);
+  // Final bytes stay separate from the working native crop evidence.
+  try {
+    const validation = run(
+      process.execPath,
+      [
+        path.join(ROOT, 'scripts/tx/validate.mjs'),
+        tmp,
+        '--paper-id',
+        paperId,
+        '--manifest',
+        manifestFile(paperId),
+        '--mode',
+        'final',
+        '--candidate-evidence',
+        path.resolve(args.candidate),
+      ],
+      { allowFail: true }
+    );
+    if (validation.status !== 0) {
+      throw new Error(
+        (validation.stderr || validation.stdout || 'validator failed').slice(
+          0,
+          2000
+        )
+      );
+    }
+  } catch (error) {
+    fs.unlinkSync(tmp);
+    fail(
+      `final schema/math/source validation failed before promotion: ${error.message}`
+    );
+  }
   for (let attempt = 1; ; attempt++) {
     try {
       fs.renameSync(tmp, target);
@@ -208,7 +286,9 @@ fs.mkdirSync(path.dirname(target), { recursive: true });
       if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) {
         try {
           fs.unlinkSync(tmp);
-        } catch {}
+        } catch {
+          // Cleanup is best effort; preserve and rethrow the original rename failure.
+        }
         throw e;
       }
       Atomics.wait(
@@ -244,7 +324,7 @@ writeJson(storedReceipt, {
 let approved = false;
 if (!args['no-approve']) {
   const pub = path.join(ROOT, 'scripts', 'publication.mjs');
-  if (!fs.existsSync(pub))
+  if (!fs.existsSync(pub)) {
     fail(
       `scripts/publication.mjs is missing — promoted ${path.relative(
         ROOT,
@@ -254,15 +334,17 @@ if (!args['no-approve']) {
         storedReceipt
       )}`
     );
+  }
   const r = run(
     'node',
     [pub, 'approve', '--paper', paperId, '--receipt', storedReceipt],
     { allowFail: true }
   );
-  if (r.status !== 0)
+  if (r.status !== 0) {
     fail(
       `publication.mjs approve failed: ${(r.stderr || r.stdout).slice(0, 500)}`
     );
+  }
   approved = true;
   process.stdout.write(r.stdout);
 }

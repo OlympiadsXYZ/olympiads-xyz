@@ -5,6 +5,10 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { singlePassEvidenceProblems } from './single-pass-evidence.mjs';
 import {
+  nativeOriginalReceiptFields,
+  nativeOriginalCoverageFields,
+} from './native-original-bindings.mjs';
+import {
   sourceConversions,
   sourceConversionProblems,
 } from './source-conversions.mjs';
@@ -29,29 +33,38 @@ import {
 
 const args = parseArgs(process.argv.slice(2));
 const paperId = args._[0];
-if (!paperId || !args.candidate || !args.evidence || !args.out)
+if (!paperId || !args.candidate || !args.evidence || !args.out) {
   fail(
     'usage: single-pass-receipt.mjs <id> --candidate <file> --evidence <reader.json> --out <receipt>'
   );
+}
 const manifest = readManifest(paperId);
 const candidatePath = path.resolve(args.candidate);
 const candidate = readJson(candidatePath, null);
 const evidence = readJson(path.resolve(args.evidence), null);
-if (!manifest || !candidate || !evidence)
+if (!manifest || !candidate || !evidence) {
   fail('manifest, candidate or reader evidence missing');
+}
 if (candidate.paper?.id !== paperId) fail('candidate paper id mismatch');
 const candidateSha256 = sha256File(candidatePath);
 const blockers = singlePassEvidenceProblems(
   evidence,
   candidate,
   manifest,
-  candidateSha256
+  candidateSha256,
+  paperDir(paperId)
 );
 blockers.push(...sourceConversionProblems(manifest, paperDir(paperId)));
-for (const e of supplementarySourceErrors(candidate, manifest))
+for (const e of supplementarySourceErrors(candidate, manifest)) {
   blockers.push(`${e.path}: ${e.message}`);
-for (const e of figureEvidenceProblems(candidate, manifest, paperDir(paperId)))
+}
+for (const e of figureEvidenceProblems(
+  candidate,
+  manifest,
+  paperDir(paperId)
+)) {
   blockers.push(`${e.path}: ${e.message}`);
+}
 const validationRun = spawnSync(
   process.execPath,
   [
@@ -74,10 +87,12 @@ try {
     }`
   );
 }
-if (validationRun.status !== 0 || validation?.ok !== true)
+if (validationRun.status !== 0 || validation?.ok !== true) {
   blockers.push('automated schema/math/source validation failed');
-if (validation?.errors)
+}
+if (validation?.errors) {
   for (const e of validation.errors) blockers.push(`${e.path}: ${e.message}`);
+}
 const checkedAt = nowIso();
 const reviewer = {
   provider: 'mechanical',
@@ -95,7 +110,26 @@ const adjudicator = candidate.tx?.adjudicator
       requestId: candidate.tx.adjudicator.requestId || 'source-adjudication',
     }
   : null;
-const renderDpi = renderDpiFor(manifest);
+const nativeContext =
+  evidence.nativeCompanionRenderWitness ||
+  evidence.nativeOriginalBindings?.solutions?.nativeOriginalKind === 'DOCX'
+    ? {
+        evidence,
+        sourceDirectory: paperDir(paperId),
+        candidate,
+        renderWitness: evidence.nativeCompanionRenderWitness,
+      }
+    : null;
+const renderDpi = renderDpiFor(manifest, nativeContext);
+const documentRenderDpi = Object.fromEntries(
+  Object.entries(manifest.documents).map(([id, doc]) => [
+    id,
+    doc.renderDpi ?? renderDpi,
+  ])
+);
+const mixedDocumentDpi = Object.values(documentRenderDpi).some(
+  dpi => dpi !== renderDpi
+);
 const prov = provenanceFor(candidate, {
   reviewer,
   promptVersion,
@@ -108,9 +142,11 @@ const prov = provenanceFor(candidate, {
 });
 const final = buildFinalPaper(candidate, prov);
 const { validate } = compileSchema('final');
-if (!validate(final.data))
-  for (const e of validate.errors)
+if (!validate(final.data)) {
+  for (const e of validate.errors) {
     blockers.push(`final schema ${e.dataPath || '/'}: ${e.message}`);
+  }
+}
 const receipt = {
   paperId,
   verdict: blockers.length ? 'fail' : 'pass',
@@ -118,7 +154,9 @@ const receipt = {
   sourceConversions: sourceConversions(manifest),
   sourceReadScopes: sourceReadScopes(manifest),
   sourceHashes,
+  ...nativeOriginalReceiptFields(evidence),
   renderDpi,
+  ...(mixedDocumentDpi ? { documentRenderDpi } : {}),
   reviewer,
   checkedAt,
   promptVersion,
@@ -143,6 +181,7 @@ const receipt = {
   readerEvidence: evidence,
   coverage: {
     pagesRead: evidence.pagesRead,
+    ...nativeOriginalCoverageFields(evidence),
     problemsRead: evidence.problemsRead,
     figuresInspected: evidence.figuresInspected,
   },

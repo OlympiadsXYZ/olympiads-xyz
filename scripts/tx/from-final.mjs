@@ -8,17 +8,40 @@
 // and earn a receipt for the exact bytes it becomes. Text is not touched.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseArgs, fail, readJson, writeJson, readManifest, allFigures, sha256File, nowIso, BBOX_SCALE } from './lib.mjs';
+import {
+  parseArgs,
+  fail,
+  readJson,
+  writeJson,
+  readManifest,
+  allFigures,
+  sha256File,
+  nowIso,
+  BBOX_SCALE,
+} from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['drop-unplaced'] });
 const paperId = args._[0];
-if (!paperId || !args.in || !args.out) fail('usage: from-final.mjs <paperId> --in <final.json> --out <candidate.json>');
+if (!paperId || !args.in || !args.out) {
+  fail(
+    'usage: from-final.mjs <paperId> --in <final.json> --out <candidate.json>'
+  );
+}
 const manifest = readManifest(paperId);
 if (!manifest) fail(`no manifest for ${paperId}; run prepare.mjs first`);
 const src = path.resolve(args.in);
 const data = readJson(src, null);
-if (!data?.paper || !Array.isArray(data.problems)) fail(`not a paper JSON: ${src}`);
-if (data.paper.id !== paperId) fail(`paper id ${data.paper.id} in the file, ${paperId} requested`);
+if (!data?.paper || !Array.isArray(data.problems)) {
+  fail(`not a paper JSON: ${src}`);
+}
+if (data.paper.id !== paperId) {
+  fail(`paper id ${data.paper.id} in the file, ${paperId} requested`);
+}
+if (allFigures(data).some(({ fig }) => fig.source?.nativeImageCrop)) {
+  fail(
+    'native-image-crop final figures require the recorded working candidate; final-only conversion cannot reconstruct crop evidence'
+  );
+}
 
 const report = { figures: 0, converted: 0, unplaced: [], spans: 0 };
 for (const { fig, path: p } of allFigures(data)) {
@@ -30,25 +53,70 @@ for (const { fig, path: p } of allFigures(data)) {
   // file) or its problem's sourceSpans put that page in the problems document only (nof-2024-iii-11-12-exp2: the
   // experimental solution is printed in the problems file while an unrelated theory key is the solutions document).
   const pi = Number((p.match(/^\/problems\/(\d+)\//) || [])[1]);
-  const spans = Number.isInteger(pi) ? data.problems[pi]?.sourceSpans || [] : [];
-  const spanned = d => spans.some(x => (x.document || 'problems') === d && x.page === s?.page);
-  const doc = s?.document || (/\/solution\//.test(p) && manifest.documents.solutions && !(spanned('problems') && !spanned('solutions')) ? 'solutions' : 'problems');
+  const spans = Number.isInteger(pi)
+    ? data.problems[pi]?.sourceSpans || []
+    : [];
+  const spanned = d =>
+    spans.some(x => (x.document || 'problems') === d && x.page === s?.page);
+  const doc =
+    s?.document ||
+    (/\/solution\//.test(p) &&
+    manifest.documents.solutions &&
+    !(spanned('problems') && !spanned('solutions'))
+      ? 'solutions'
+      : 'problems');
   const size = manifest.documents[doc]?.pageSizes?.[(s?.page || 0) - 1];
-  if (!s?.pdfRect || !size) { report.unplaced.push({ id: fig.id, path: p, reason: !s?.pdfRect ? 'no source.pdfRect' : `no page ${s.page} in ${doc}`, dropped: !!args['drop-unplaced'] }); if (args['drop-unplaced']) { fig.__drop = true; continue; } }
-  else {
+  if (!s?.pdfRect || !size) {
+    report.unplaced.push({
+      id: fig.id,
+      path: p,
+      reason: !s?.pdfRect ? 'no source.pdfRect' : `no page ${s.page} in ${doc}`,
+      dropped: !!args['drop-unplaced'],
+    });
+    if (args['drop-unplaced']) {
+      fig.__drop = true;
+      continue;
+    }
+  } else {
     const [x0, y0, x1, y1] = s.pdfRect;
-    fig.tx = { document: doc, page: s.page, bbox: [x0 / size.widthPt, y0 / size.heightPt, x1 / size.widthPt, y1 / size.heightPt].map(v => Math.round(v * BBOX_SCALE)) };
+    fig.tx = {
+      document: doc,
+      page: s.page,
+      bbox: [
+        x0 / size.widthPt,
+        y0 / size.heightPt,
+        x1 / size.widthPt,
+        y1 / size.heightPt,
+      ].map(v => Math.round(v * BBOX_SCALE)),
+    };
     report.converted++;
   }
-  delete fig.url; delete fig.width; delete fig.height; delete fig.source;
+  delete fig.url;
+  delete fig.width;
+  delete fig.height;
+  delete fig.source;
 }
 // --drop-unplaced: a figure with no source rectangle cannot be proposed as a box; without it the
 // printed-graphics check raises the drawing and the refix proposes a box from the page
 for (const pr of data.problems) {
-  for (const holder of [pr, ...(pr.parts || []), pr.solution].filter(Boolean)) if (Array.isArray(holder.figures)) { holder.figures = holder.figures.filter(f => !f.__drop); if (!holder.figures.length) delete holder.figures; }
+  for (const holder of [pr, ...(pr.parts || []), pr.solution].filter(Boolean)) {
+    if (Array.isArray(holder.figures)) {
+      holder.figures = holder.figures.filter(f => !f.__drop);
+      if (!holder.figures.length) delete holder.figures;
+    }
+  }
 }
 for (const pr of data.problems) {
-  if (Array.isArray(pr.sourceSpans) && pr.sourceSpans.length) { pr.tx = { ...(pr.tx || {}), sourceSpans: pr.sourceSpans.map(x => ({ document: x.document, page: x.page })) }; report.spans++; }
+  if (Array.isArray(pr.sourceSpans) && pr.sourceSpans.length) {
+    pr.tx = {
+      ...(pr.tx || {}),
+      sourceSpans: pr.sourceSpans.map(x => ({
+        document: x.document,
+        page: x.page,
+      })),
+    };
+    report.spans++;
+  }
   delete pr.sourceSpans;
 }
 const t = data.paper.transcription || {};
@@ -56,10 +124,25 @@ delete data.paper.transcription;
 data.paper.status = 'draft';
 data.tx = {
   ...(data.tx || {}),
-  reader: { provider: t.provider || 'agent', model: t.model || 'unknown', promptVersion: t.promptVersion || 'agent-workflow-2026-09', at: t.at || nowIso().slice(0, 10) },
+  reader: {
+    provider: t.provider || 'agent',
+    model: t.model || 'unknown',
+    promptVersion: t.promptVersion || 'agent-workflow-2026-09',
+    at: t.at || nowIso().slice(0, 10),
+  },
   notes: [data.tx?.notes, t.notes].filter(Boolean).join('\n'),
-  fromFinal: { file: path.relative(process.cwd(), src).split(path.sep).join('/'), sha256: sha256File(src), at: nowIso() },
+  fromFinal: {
+    file: path.relative(process.cwd(), src).split(path.sep).join('/'),
+    sha256: sha256File(src),
+    at: nowIso(),
+  },
 };
 writeJson(path.resolve(args.out), data);
-console.log(JSON.stringify({ paperId, out: path.resolve(args.out), reader: data.tx.reader, ...report }, null, 2));
+console.log(
+  JSON.stringify(
+    { paperId, out: path.resolve(args.out), reader: data.tx.reader, ...report },
+    null,
+    2
+  )
+);
 if (report.unplaced.length && !args['drop-unplaced']) process.exit(3);
