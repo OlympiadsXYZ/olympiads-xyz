@@ -295,3 +295,13 @@ cut at problem boundaries); each agent reads only its pages, adds what they prin
 candidate carries `tx.splitRead` and declares the pages read so far (`paper.source.pages`, `paper.solutionSource.pages`,
 `[]` for none yet), so the text-layer check looks for omissions only there; unread solutions are marked incomplete
 ("предстои"), and a paper missing problems says so in `paper.caveat` until its last chunk. Piloted on five papers first.
+
+## D-P31 (2026-10-15) — the provenance line under a problem's title is no longer shown
+
+**Decision (Margulan, 2026-10-15): "remove this: Автоматична транскрипция на оригинала · проверена на 25.9.2026. dont
+get rid of the info just dont show it on the page".** This narrows D-P7. Problem and solution pages no longer render
+the provenance line or its tooltip (`SHOW_PROVENANCE_LINE` in `ModuleHeaders.tsx`). The `verification` and `verifiedAt`
+frontmatter, the receipts, the publication ledger and the `problem-provenance-*` / `problem-verification-*` strings stay,
+so the line can come back by flipping the constant. The same day the "Архивът е отново онлайн!" announcement (30 Aug
+2026) was taken off the dashboard and /announcements by renaming it to `announcements/Archive Restored 2026.txt`; only
+`.mdx` files become announcements, so its text is kept.

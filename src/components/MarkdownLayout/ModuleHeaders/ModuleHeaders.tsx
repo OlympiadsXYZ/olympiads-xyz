@@ -34,6 +34,10 @@ function formatVerifiedAt(iso?: string): string {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? '');
   return m ? `${Number(m[3])}.${Number(m[2])}.${m[1]}` : '';
 }
+// The provenance line under a problem's title ("Автоматична транскрипция на оригинала · проверена на …") is hidden
+// at Margulan's request (2026-10-15). The verification data stays in the frontmatter and the receipts; set this to
+// true to show the line again.
+const SHOW_PROVENANCE_LINE = false;
 
 export default function ModuleHeaders({
   moduleLinks,
@@ -135,7 +139,8 @@ export default function ModuleHeaders({
               : {markdownData.author}
             </p>
           )}
-          {verification &&
+          {SHOW_PROVENANCE_LINE &&
+            verification &&
             (() => {
               const date = formatVerifiedAt(verification.verifiedAt);
               const detail =
