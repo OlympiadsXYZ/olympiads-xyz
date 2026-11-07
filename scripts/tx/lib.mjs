@@ -3,6 +3,7 @@
 // schema compilation, math-span detection and the deterministic serialisation
 // that receipt.mjs and promote.mjs must agree on byte-for-byte.
 import { mixedDocumentRenderDpiProblems } from './native-original-bindings.mjs';
+import { scopedKeyRecoveryRenderDpi } from './scoped-key-recovery.mjs';
 import {
   isNativeImageCrop,
   nativeImageCropEvidenceError,
@@ -54,6 +55,12 @@ export const FIGURE_DPI = 300;
 // A new receipt records the actual prepared page rendering. Historical receipts
 // without an explicit value retain their original deterministic default bytes.
 export function renderDpiFor(manifest, nativeContext = null) {
+  if (nativeContext?.scopedKeyRecovery) {
+    return scopedKeyRecoveryRenderDpi(
+      manifest,
+      nativeContext.scopedKeyRecovery
+    );
+  }
   const documents = Object.entries(manifest.documents || {});
   const dpi =
     manifest.renderDpi ??

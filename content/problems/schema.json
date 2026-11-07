@@ -98,7 +98,7 @@
           "$ref": "#/$defs/pdfSource"
         },
         "solutionSource": {
-          "$ref": "#/$defs/pdfSource"
+          "$ref": "#/$defs/solutionSource"
         },
         "resultsSource": {
           "$ref": "#/$defs/pdfSource"
@@ -379,6 +379,26 @@
             "type": "integer",
             "minimum": 1
           }
+        }
+      }
+    },
+    "solutionSource": {
+      "type": "object",
+      "required": ["archiveKey"],
+      "additionalProperties": false,
+      "properties": {
+        "archiveKey": {
+          "$ref": "#/$defs/pdfSource/properties/archiveKey"
+        },
+        "pages": {
+          "$ref": "#/$defs/pdfSource/properties/pages"
+        },
+        "problemIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Only these owning-paper problem IDs use this solutions original. Omit for the whole paper; explicit named manual source selections retain priority."
         }
       }
     },

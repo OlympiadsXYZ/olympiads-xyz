@@ -7,11 +7,20 @@
 // on any blocker or defect in the receipt, on missing figure evidence, on a
 // same-model check the receipt did not explicitly allow, and on any hash
 // mismatch between receipt and the bytes actually written.
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { supplementarySourceErrors, sourceHashErrors } from './supplements.mjs';
 import { sourceConversionProblems } from './source-conversions.mjs';
 import { sourceReadScopeProblems } from './source-read-scope.mjs';
+import {
+  exactBytes,
+  qualifyScopedKeyRecovery,
+  qualifyScopedKeyRecoveryReceipt,
+  scopeApprovalFile,
+  scopeReadingFile,
+  scopePhaseFile,
+} from './scoped-key-recovery.mjs';
 import {
   assertReplacementLinks,
   assertPromotionNotRetired,
@@ -124,14 +133,71 @@ for (const issue of supplementarySourceErrors(candidate, manifest)) {
   fail(`${issue.path}: ${issue.message}`);
 }
 
+let scopedInputs, scoped, scopedCanonical, scopedReceipt;
+if (Object.hasOwn(receipt.repairAncestryEvidence || {}, 'scopedKeyRecovery')) {
+  try {
+    assert.equal(
+      args.replace,
+      true,
+      'Scoped recovery replaces one existing owner'
+    );
+    const manifestPath = manifestFile(paperId);
+    const ownerDir = path.dirname(manifestPath);
+    const approval = fs.readFileSync(path.join(ownerDir, scopeApprovalFile));
+    const phases = JSON.parse(approval.toString('utf8')).keyReading.phases;
+    assert(
+      Array.isArray(phases) &&
+        phases.length > 0 &&
+        phases.length <= manifest.documents.solutions.readScope.pages.length
+    );
+    scopedCanonical = contentPathFor(paperId, candidate.paper);
+    scopedReceipt = path.join(
+      ROOT,
+      'content',
+      'problem-receipts',
+      paperId + '.json'
+    );
+    scopedInputs = {
+      approval,
+      priorCanonical: fs.readFileSync(scopedCanonical),
+      priorReceipt: fs.readFileSync(scopedReceipt),
+      candidate: fs.readFileSync(path.resolve(args.candidate)),
+      manifest: fs.readFileSync(manifestPath),
+      boundedReading: fs.readFileSync(path.join(ownerDir, scopeReadingFile)),
+      phaseEvidence: phases.map((_, index) =>
+        fs.readFileSync(path.join(ownerDir, scopePhaseFile(index)))
+      ),
+    };
+    scoped = qualifyScopedKeyRecovery(scopedInputs);
+    assert.deepEqual(candidate, scoped.candidate);
+    qualifyScopedKeyRecoveryReceipt(scoped, receipt);
+    for (const [role, doc] of Object.entries(manifest.documents)) {
+      const source = path.resolve(ownerDir, doc.file);
+      const relative = path.relative(ownerDir, source);
+      assert(
+        relative &&
+          relative !== '..' &&
+          !relative.startsWith('..' + path.sep) &&
+          !path.isAbsolute(relative)
+      );
+      const measured = exactBytes(fs.readFileSync(source));
+      assert.equal(measured.sha256, doc.fileSha256 || doc.sha256);
+      if (role === 'solutions') assert.equal(measured.bytes, doc.bytes);
+    }
+  } catch (error) {
+    fail(error.message);
+  }
+}
 if (receipt.renderDpi !== undefined) {
   let actualDpi;
   try {
     actualDpi = renderDpiFor(
       manifest,
-      receipt.readerEvidence?.nativeCompanionRenderWitness ||
-        receipt.readerEvidence?.nativeOriginalBindings?.solutions
-          ?.nativeOriginalKind === 'DOCX'
+      scopedInputs
+        ? { scopedKeyRecovery: scopedInputs }
+        : receipt.readerEvidence?.nativeCompanionRenderWitness ||
+          receipt.readerEvidence?.nativeOriginalBindings?.solutions
+            ?.nativeOriginalKind === 'DOCX'
         ? {
             evidence: receipt.readerEvidence,
             sourceDirectory: path.dirname(manifestFile(paperId)),
@@ -199,6 +265,9 @@ const target = contentPathFor(paperId, {
   competition: final.data.paper.competition,
   year: final.data.paper.year,
 });
+if (scoped && target !== scopedCanonical) {
+  fail('Scoped recovery cannot move the historical owner path');
+}
 // A new passing transcription cannot undo a prior source duplicate/withdrawal
 // decision. Check before writing either canonical bytes or stored receipts.
 const existingFiles = listContentFiles().filter(
@@ -284,6 +353,18 @@ fs.mkdirSync(path.dirname(target), { recursive: true });
   }
   for (let attempt = 1; ; attempt++) {
     try {
+      if (scoped) {
+        assert.deepEqual(
+          exactBytes(fs.readFileSync(target)),
+          scoped.priorCanonical,
+          'Prior canonical changed before replacement'
+        );
+        assert.deepEqual(
+          exactBytes(fs.readFileSync(scopedReceipt)),
+          scoped.priorReceipt,
+          'Prior receipt changed before replacement'
+        );
+      }
       fs.renameSync(tmp, target);
       break;
     } catch (e) {

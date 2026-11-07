@@ -9,7 +9,12 @@ export function sourceDocumentFor(paper, problem, role, overlay = {}) {
   const document = pinned?.document;
   // Existing pins retain their exact original source selection and priority.
   if (document === undefined || document === role) {
-    return { document: role, source: original };
+    const covered =
+      role !== 'solutions' ||
+      original?.problemIds === undefined ||
+      (Array.isArray(original.problemIds) &&
+        original.problemIds.includes(problem?.id));
+    return { document: role, source: covered ? original : null };
   }
   const label = role === 'solutions' ? 'key' : 'question';
   const pinRole = role === 'solutions' ? 'solution' : 'question';

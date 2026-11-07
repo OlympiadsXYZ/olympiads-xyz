@@ -25,6 +25,13 @@ def validate(root=ROOT):
         if paper.get('id') in paper_ids:
             errors.append(f'{file}: duplicate paper id')
         paper_ids.add(paper.get('id'))
+        solution_source = paper.get('solutionSource')
+        covered_ids = solution_source.get('problemIds') if isinstance(solution_source, dict) else None
+        if isinstance(covered_ids, list):
+            owned_ids = {problem.get('id') for problem in data.get('problems', [])}
+            for index, pid in enumerate(covered_ids):
+                if isinstance(pid, str) and pid not in owned_ids:
+                    errors.append(f'{file}: solutionSource.problemIds[{index}] must match an owning problem id: {pid}')
         for problem in data.get('problems', []):
             count += 1
             pid = problem.get('id', '')

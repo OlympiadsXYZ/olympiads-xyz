@@ -2066,6 +2066,7 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   const misplaced = misplacedSolutionFigures(paper, problem);
   const inStatement = fig => !misplaced.some(m => m.fig === fig);
   const sol = problem.solution;
+  const solutionOriginal = solutionOriginalFor(paper, problem, sourcePages);
   // the figure blocks the page shows (figures the text already shows inline are not repeated), and where the anchor
   // overlay puts them; an unanchored figure keeps its place: statement figures after the statement, a part's after
   // the part, solution figures (and the ones moved out of the statement) at the end of the solution spoiler
@@ -2346,7 +2347,7 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
           ? 'Решението от архива е непълно.'
           : sol.statement
           ? 'Официалното решение е непълно.'
-          : paper.solutionSource?.archiveKey
+          : solutionOriginal?.archiveKey
           ? 'Официалното решение не е транскрибирано — вижте файла с решенията в Архива (връзката е в края на страницата).'
           : NO_ARCHIVE_SOLUTION_LINE;
       const note = incompleteNoteText(
@@ -2414,7 +2415,6 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   }
   const src = sourceDocumentFor(paper, problem, 'problems', sourcePages).source
     ?.archiveKey;
-  const solutionOriginal = solutionOriginalFor(paper, problem, sourcePages);
   if (src) {
     lines.push('---', '');
     lines.push(
@@ -2470,6 +2470,9 @@ export function problemInfo(paper, problem) {
   const grade = gradeLabel(paper.grade, paper.subject, paper.competition);
   const solutionOriginal = solutionOriginalFor(paper, problem, sourcePages);
   const classification = classificationSearch(problem.classification);
+  const topics =
+    taxonomy ??
+    readJson(new URL('../content/problem-topics.json', import.meta.url));
   return {
     uniqueId: problem.id,
     // Kept short: the card shows it next to the source line. (Routes are frozen, D-P5: neither changes a URL.)
@@ -2497,8 +2500,8 @@ export function problemInfo(paper, problem) {
     tags: [
       ...new Set(
         [
-          ...controlledTopics(problem.topics, taxonomy).map(
-            id => taxonomy.topics.find(t => t.id === id).label
+          ...controlledTopics(problem.topics, topics).map(
+            id => topics.topics.find(t => t.id === id).label
           ),
           ...(classification?.tags || []),
           ...(grade ? [grade] : []),

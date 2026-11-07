@@ -5,7 +5,7 @@ title: 'Задача 3. В ожидании максимума'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/VsOA-ru/2025/vsoa-ru-2025-iv-9-prob2025teor9.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-17T13:50:50.965Z'
+verifiedAt: '2026-11-07'
 verifier: 'mechanical'
 ---
 
@@ -19,10 +19,88 @@ verifier: 'mechanical'
 
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+В Гринвиче при принятых допущениях гражданское время совпадает с местным и средним солнечным. В $18^\mathrm{h}00^\mathrm{m}$ в день наблюдения Солнце находится в точке осеннего равноденствия и заходит на западе, а в точке востока находится точка весеннего равноденствия $\text{♈}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.7%', '--fig-max': '388px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vsoa-ru-2025-iv-9-prob2025teor9/recovery-production-8871e8710ae431d411339fce.png" alt="Горизонт, небесный экватор и эклиптика пересекаются в точке востока и весеннего равноденствия." width="1214" height="919" loading="lazy" decoding="async" />
+<figcaption>Рис. 6: Вид на точку востока в 18:00</figcaption>
+</figure>
+
+
+Церера взошла в $17^\mathrm{h}30^\mathrm{m}$. Точка $\text{♈}$ тогда была под горизонтом на глубине
+
+$$
+h=0.5^\mathrm h\cos\varphi=7.5^\circ\cos\varphi\approx4.7^\circ.
+$$
+
+Эклиптика проходит через $\text{♈}$ и наклонена к небесному экватору на угол $\varepsilon$. Церера находится одновременно на эклиптике и на горизонте, поэтому её угловое расстояние от $\text{♈}$ равно
+
+$$
+L=\frac{h}{\cos(\varphi+\varepsilon)}=\frac{7.5^\circ\cos\varphi}{\cos(\varphi+\varepsilon)}\approx18^\circ.
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '63.6%', '--fig-max': '407px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vsoa-ru-2025-iv-9-prob2025teor9/recovery-production-07d1f95a241a8f4d9c5fd111.png" alt="Точка весеннего равноденствия на глубине h под горизонтом, Церера на горизонте и угловое расстояние L между ними." width="1273" height="967" loading="lazy" decoding="async" />
+<figcaption>Рис. 7: Вид на точку востока в 17:30</figcaption>
+</figure>
+
+
+Обозначим радиусы орбит Земли и Цереры через $a_\oplus$ и $a$ соответственно. Точка весеннего равноденствия находится в противостоянии к Солнцу, так что угол $\text{♈}$ — Земля — Церера равен $L$. Обозначим угол Земля — Церера — Солнце (фазовый угол) через $\beta$, а угол Земля — Солнце — Церера через $\gamma$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.1%', '--fig-max': '359px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vsoa-ru-2025-iv-9-prob2025teor9/recovery-production-d9899e5266dc15f004e02e01.png" alt="Орбиты Земли и Цереры, треугольник Солнце — Земля — Церера и углы L, β, γ." width="1122" height="1167" loading="lazy" decoding="async" />
+<figcaption>Рис. 8: Вид из полюса эклиптики</figcaption>
+</figure>
+
+
+По теореме синусов для треугольника Солнце — Земля — Церера
+
+$$
+\frac{a}{\sin(180^\circ-L)}=\frac{a_\oplus}{\sin\beta},\qquad \beta=\arcsin\left(\frac{a_\oplus}{a}\sin L\right)=\arcsin\left(\frac{1}{2.77}\sin18^\circ\right)\approx6.4^\circ.
+$$
+
+Из суммы углов получаем $\gamma=L-\beta=11.6^\circ$, а по теореме косинусов расстояние от Земли до Цереры равно
+
+$$
+R=\sqrt{a_\oplus^2+a^2-2a_\oplus a\cos\gamma}=1.8\,\text{а. е.}
+$$
+
+При круговых орбитах Церера ярче всего в противостоянии, когда она ближе всего к Земле и её фаза равна единице. В момент восхода фаза $\Phi=(1+\cos\beta)/2\approx0.997$, поэтому её отличием от единицы пренебрегаем.
+
+В печатном ключе сравнение звёздных величин по формуле Погсона записано так:
+
+$$
+m_{\max}-m=-2.5\lg\frac{R^2}{(a-a_\oplus)^2}=-5\lg\frac{R}{a-a_\oplus}\approx0.04^{\mathrm m}.
+$$
+
+*Примечание к источнику.* Ключ печатает положительное численное значение рядом с отрицательным выражением для $m_{\max}-m$. Искомое ослабление блеска соответствует $m-m_{\max}\approx0.04^{\mathrm m}$.
+
+При взгляде с северного полюса эклиптики планеты движутся против часовой стрелки. Церера движется медленнее Земли и находится восточнее Солнца, то есть противостояние было недавно. Синодический период Цереры
+
+$$
+S=\frac{TT_\oplus}{T-T_\oplus}=\frac{a^{1.5}}{a^{1.5}-1}\approx1.28\,\text{года},
+$$
+
+где $T$ и $T_\oplus$ — орбитальные периоды Цереры и Земли. Церера была в противостоянии $t=S\gamma/360^\circ\approx0.04$ года назад и снова достигнет максимума блеска через $\Delta t=S-t=1.24$ года, или примерно 452 суток.
+
+<ProblemSection id="solution-rubric">
+
+### Критерии оценивания (15 т.)
+
+- **К1 (4 балла).** Угловое расстояние $L$ между $\text{♈}$ и Церерой.
+- **К2 (4 балла).** Расстояние между Церерой и Землёй в момент наблюдения.
+- **К3 (3 балла).** Разность звёздных величин. Если фаза не рассмотрена, вычитается 1 балл.
+- **К4 (2 балла).** Синодический период.
+- **К5 (2 балла).** Время до следующего противостояния.
+
+</ProblemSection>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [prob2025teor9.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%92%D1%81%D0%B5%D1%80%D1%83%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B0/2025/final/9/prob2025teor9.pdf#page=1)
+· официални решения: [psol2025teor9.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%92%D1%81%D0%B5%D1%80%D1%83%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B0/2025/final/9/psol2025teor9.pdf#page=8)

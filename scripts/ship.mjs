@@ -71,6 +71,12 @@ const gates = [
       'scripts/tests/source-conversions.test.mjs',
       'scripts/tests/xlsx-source.test.mjs',
       'scripts/tests/xls-source.test.mjs',
+      'scripts/tests/partial-solution-source.test.mjs',
+      'scripts/tests/problem-info-topics.test.mjs',
+      'scripts/tests/missing-key-source-link.test.mjs',
+      'scripts/tests/problem-source-document.test.mjs',
+      'scripts/tests/page-candidate.test.mjs',
+      'scripts/tests/page-candidate-figures.test.mjs',
     ],
   ],
   [
