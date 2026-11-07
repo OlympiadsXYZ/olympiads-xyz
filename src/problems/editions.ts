@@ -89,19 +89,24 @@ export function buildEditionProjection(
   const problemPaper = new Map(
     papers.flatMap(p => p.problems.map(q => [q.id, p.paper] as const))
   );
-  for (const [id, paper] of problemPaper)
+  for (const [id, paper] of problemPaper) {
     out.languageById.set(id, paper.lang ?? '');
+  }
   // A repeated member invalidates every affected group, not just the later one.
   const owners = new Map<string, number>();
-  for (const group of config.groups)
-    for (const task of group.tasks ?? [])
-      for (const id of task.members ?? [])
+  for (const group of config.groups) {
+    for (const task of group.tasks ?? []) {
+      for (const id of task.members ?? []) {
         owners.set(id, (owners.get(id) ?? 0) + 1);
+      }
+    }
+  }
   const groupIds = new Set<string>();
   for (const group of config.groups) {
     const errors: string[] = [];
-    if (!group.id || groupIds.has(group.id))
+    if (!group.id || groupIds.has(group.id)) {
       errors.push('missing or repeated group id');
+    }
     groupIds.add(group.id);
     if (
       !group.cohort ||
@@ -126,28 +131,34 @@ export function buildEditionProjection(
         file.paper.subject !== group.subject ||
         file.paper.competition !== group.competition ||
         file.paper.year !== group.year
-      )
+      ) {
         errors.push(`${id}: competition/year/subject differs`);
-      if (group.roundType && file.paper.roundType !== group.roundType)
+      }
+      if (group.roundType && file.paper.roundType !== group.roundType) {
         errors.push(`${id}: round differs`);
+      }
       if (
         file.paper.grade &&
         cohort(group.cohort) !== 'all' &&
         cohort(file.paper.grade) !== cohort(group.cohort)
-      )
+      ) {
         errors.push(`${id}: cohort differs`);
-      if (file.paper.lang !== input.lang)
+      }
+      if (file.paper.lang !== input.lang) {
         errors.push(`${id}: language differs`);
+      }
       if (
         !/^[a-f0-9]{64}$/.test(input.sha256) ||
         hashes.get(id) !== input.sha256
-      )
+      ) {
         errors.push(`${id}: source-audited input hash differs`);
+      }
     }
     const taskKeys = new Set<string>();
     for (const task of group.tasks ?? []) {
-      if (!task.key || taskKeys.has(task.key))
+      if (!task.key || taskKeys.has(task.key)) {
         errors.push('missing or repeated task key');
+      }
       taskKeys.add(task.key);
       if (!Array.isArray(task.members) || task.members.length < 2) {
         errors.push(`${task.key}: fewer than two editions`);
@@ -156,14 +167,17 @@ export function buildEditionProjection(
       const languages = new Set<string>();
       for (const id of task.members) {
         const paper = problemPaper.get(id);
-        if (!paper || !paperIds.has(paper.id))
+        if (!paper || !paperIds.has(paper.id)) {
           errors.push(`${id}: missing problem or outside audited scope`);
-        if ((owners.get(id) ?? 0) > 1)
+        }
+        if ((owners.get(id) ?? 0) > 1) {
           errors.push(`${id}: mapped more than once`);
+        }
         if (paper?.lang) languages.add(paper.lang);
       }
-      if (languages.size < 2)
+      if (languages.size < 2) {
         errors.push(`${task.key}: not a language correspondence`);
+      }
     }
     if (errors.length) {
       out.issues.push(...errors.map(e => `${group.id}: ${e}`));

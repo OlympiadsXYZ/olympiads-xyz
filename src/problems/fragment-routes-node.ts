@@ -52,8 +52,9 @@ export function readProblemFragmentRoutes(
   function reject(message: string): never {
     throw new Error(`[problem fragments] ${message}`);
   }
-  if (data.version !== 1 || !Array.isArray(data.groups))
+  if (data.version !== 1 || !Array.isArray(data.groups)) {
     reject('invalid config/version');
+  }
   const result = new Map<string, ProblemFragmentRoute[]>();
   const sourceKeys = new Set<string>();
   const targetKeys = new Set<string>();
@@ -63,15 +64,17 @@ export function readProblemFragmentRoutes(
       !group.paper ||
       !/^content\/problems\/[a-zA-Z0-9_./-]+\.json$/.test(group.paper.path) ||
       group.paper.path.split('/').some(x => x === '..' || x === '.')
-    )
+    ) {
       reject('unsafe canonical paper path');
+    }
     const canonical = path.resolve(root, group.paper.path);
     const relative = path.relative(
       path.resolve(root, 'content/problems'),
       canonical
     );
-    if (!relative || relative.startsWith('..') || path.isAbsolute(relative))
+    if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) {
       reject('paper must be inside content/problems');
+    }
     if (paperInputs.has(canonical)) reject('duplicate paper group');
     paperInputs.add(canonical);
     if (
@@ -79,26 +82,31 @@ export function readProblemFragmentRoutes(
       !SHA.test(group.previousCanonicalSha256) ||
       !group.sourceReaderEvidence?.reference?.trim() ||
       !SHA.test(group.sourceReaderEvidence.sha256)
-    )
+    ) {
       reject('missing exact input/source-reader evidence hashes');
-    if (group.paper.sha256 === group.previousCanonicalSha256)
+    }
+    if (group.paper.sha256 === group.previousCanonicalSha256) {
       reject('grouped input must differ from historical input');
+    }
     const bytes = fs.readFileSync(canonical);
     if (
       crypto.createHash('sha256').update(bytes).digest('hex') !==
       group.paper.sha256
-    )
+    ) {
       reject('canonical input hash mismatch: ' + group.paper.path);
+    }
     const paper: FragmentPaper = JSON.parse(bytes.toString('utf8'));
-    if (!paper.paper?.id || !Array.isArray(paper.problems))
+    if (!paper.paper?.id || !Array.isArray(paper.problems)) {
       reject('invalid canonical paper');
+    }
     const problems = new Map(paper.problems.map(p => [p.id, p]));
     if (
       problems.size !== paper.problems.length ||
       !Array.isArray(group.mappings) ||
       !group.mappings.length
-    )
+    ) {
       reject('duplicate problem IDs or empty mappings');
+    }
     for (const mapping of group.mappings) {
       const { fromProblemId, fromFragment, toProblemId, toFragment, label } =
         mapping;
@@ -109,37 +117,43 @@ export function readProblemFragmentRoutes(
         !ANCHOR.test(toFragment) ||
         typeof label !== 'string' ||
         !label.trim()
-      )
+      ) {
         reject('invalid mapping identifier/label');
+      }
       const from = problems.get(fromProblemId),
         to = problems.get(toProblemId);
-      if (!from || !to || fromProblemId === toProblemId)
+      if (!from || !to || fromProblemId === toProblemId) {
         reject(
           'mapping must move between two retained IDs in the exact same paper'
         );
+      }
       if (
         !availableSolutionUrls.has(fromProblemId) ||
         !availableSolutionUrls.has(toProblemId)
-      )
+      ) {
         reject('source or target solution page is unavailable');
-      if (anchors(from).has(fromFragment))
+      }
+      if (anchors(from).has(fromFragment)) {
         reject(
           'mapping shadows a retained native section: ' +
             fromProblemId +
             '#' +
             fromFragment
         );
-      if (!anchors(to).has(toFragment))
+      }
+      if (!anchors(to).has(toFragment)) {
         reject(
           'missing target native question/key section: ' +
             toProblemId +
             '#' +
             toFragment
         );
+      }
       const source = fromProblemId + '#' + fromFragment,
         target = toProblemId + '#' + toFragment;
-      if (sourceKeys.has(source))
+      if (sourceKeys.has(source)) {
         reject('duplicate source fragment: ' + source);
+      }
       sourceKeys.add(source);
       targetKeys.add(target);
       const url = availableSolutionUrls.get(toProblemId)!;
@@ -147,8 +161,9 @@ export function readProblemFragmentRoutes(
         !/^\/problems\/[a-zA-Z0-9_/%-]+\/solution$/.test(url) ||
         url.includes('..') ||
         url.includes('\\')
-      )
+      ) {
         reject('unsafe target solution URL');
+      }
       const rows = result.get(fromProblemId) ?? [];
       rows.push({
         fromFragment,
@@ -158,8 +173,10 @@ export function readProblemFragmentRoutes(
       result.set(fromProblemId, rows);
     }
   }
-  for (const source of sourceKeys)
-    if (targetKeys.has(source))
+  for (const source of sourceKeys) {
+    if (targetKeys.has(source)) {
       reject('fragment chains/cycles are not permitted');
+    }
+  }
   return result;
 }

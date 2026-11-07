@@ -296,8 +296,9 @@ export function readEditionProjection(
   const configFile = path.join(repoRoot, 'content/problem-editions.json');
   let config: ProblemEditions | null = null;
   try {
-    if (fs.existsSync(configFile))
+    if (fs.existsSync(configFile)) {
       config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
+    }
   } catch (e) {
     console.warn(`[problems] editions unreadable; keeping all editions: ${e}`);
   }
@@ -309,14 +310,16 @@ export function readEditionProjection(
       !/^content\/problems\/.+\.json$/.test(input.path) ||
       input.path.split('/').includes('..') ||
       input.path.includes('\\')
-    )
+    ) {
       continue;
+    }
     const full = path.join(repoRoot, input.path);
-    if (fs.existsSync(full))
+    if (fs.existsSync(full)) {
       hashes.set(
         id,
         crypto.createHash('sha256').update(fs.readFileSync(full)).digest('hex')
       );
+    }
   }
   const projection = buildEditionProjection(
     config,
@@ -324,10 +327,11 @@ export function readEditionProjection(
     availableIds,
     hashes
   );
-  for (const issue of projection.issues)
+  for (const issue of projection.issues) {
     console.warn(
       `[problems] editions: ${issue}; keeping affected editions visible`
     );
+  }
   return projection;
 }
 

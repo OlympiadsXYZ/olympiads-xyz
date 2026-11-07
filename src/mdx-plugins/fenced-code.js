@@ -16,14 +16,16 @@ function splitFencedCode(value) {
     if (end === lines.length) continue; // an incomplete fence gets no lint exemption
     const start = lines[i].index;
     const finish = lines[end].index + lines[end][0].length;
-    if (start > plainStart)
+    if (start > plainStart) {
       out.push({ text: text.slice(plainStart, start), code: false });
+    }
     out.push({ text: text.slice(start, finish), code: true });
     plainStart = finish;
     i = end;
   }
-  if (plainStart < text.length || !out.length)
+  if (plainStart < text.length || !out.length) {
     out.push({ text: text.slice(plainStart), code: false });
+  }
   return out;
 }
 const outsideFencedCode = (text, transform) =>
