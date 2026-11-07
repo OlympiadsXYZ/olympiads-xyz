@@ -74,6 +74,8 @@ const validationRun = spawnSync(
     paperId,
     '--manifest',
     path.join(paperDir(paperId), 'manifest.json'),
+    '--mode',
+    'candidate',
   ],
   { cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }
 );

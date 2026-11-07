@@ -24,6 +24,14 @@ export function editorProblemMetadata(
     url: problem.url,
     source: problem.source,
     difficulty: problem.difficulty as ProblemMetadata['difficulty'],
+    ...(problem.assessmentLabel != null
+      ? { assessmentLabel: problem.assessmentLabel }
+      : {}),
+    ...(problem.fields != null ? { fields: problem.fields } : {}),
+    ...(problem.conceptIds != null ? { conceptIds: problem.conceptIds } : {}),
+    ...(problem.classificationTerms != null
+      ? { classificationTerms: problem.classificationTerms }
+      : {}),
     isStarred: false,
     tags: problem.tags || [],
     solutionMetadata,

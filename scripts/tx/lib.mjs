@@ -1766,6 +1766,76 @@ export function wrapBareFormulaParagraphs(s) {
     })
     .join('\n\n');
 }
+// A missing separate key is not evidence that an answer was derived: keys may
+// be printed in the question document. Preserve the candidate and require the
+// actual printed key/solution transcription before a new candidate can publish.
+// Page coverage and reader notes alone do not establish answer provenance.
+export function answerSourceProblems(candidate, manifest) {
+  if (!manifest?.documents) return [];
+  // prepare.mjs records downloaded:false for valid cached sources. Availability
+  // depends on the prepared source descriptor, not whether this run fetched it.
+  const prepared = doc =>
+    doc &&
+    typeof doc === 'object' &&
+    !Array.isArray(doc) &&
+    typeof doc.sha256 === 'string' &&
+    /^[a-f0-9]{64}$/.test(doc.sha256) &&
+    Number.isSafeInteger(doc.bytes) &&
+    doc.bytes > 0 &&
+    Number.isSafeInteger(doc.pages) &&
+    doc.pages > 0;
+  if (prepared(manifest.documents.solutions)) return [];
+  const problems = [];
+  const hasText = body =>
+    [
+      body?.statement,
+      body?.statementAfterParts,
+      ...(body?.parts || []).flatMap(part => [
+        part?.statement,
+        part?.statementAfter,
+      ]),
+    ].some(text => typeof text === 'string' && text.trim());
+  (candidate?.problems || []).forEach((pr, i) => {
+    const spans = pr?.tx?.sourceSpans || pr?.sourceSpans || [];
+    const hasSourcePage = spans.some(
+      span =>
+        Number.isInteger(span.page) &&
+        span.page >= 1 &&
+        prepared(manifest.documents[span.document]) &&
+        span.page <= manifest.documents[span.document].pages
+    );
+    if (
+      hasSourcePage &&
+      (hasText(pr?.solution) || (pr?.solution?.sections || []).some(hasText))
+    ) {
+      return;
+    }
+    const check = (holder, pointer) => {
+      const answer = holder?.answer;
+      if (answer && typeof answer === 'object' && answer.kind !== 'choice') {
+        problems.push({
+          path: `${pointer}/answer`,
+          message:
+            'answer source unresolved: no separate solutions document and no transcribed source solution or printed answer key with a prepared source-page span; preserve this answer for review and supply the actual printed key/solution text with its source spans before publication',
+        });
+      }
+    };
+    const root = `/problems/${i}`;
+    check(pr, root);
+    (pr?.parts || []).forEach((part, j) => check(part, `${root}/parts/${j}`));
+    for (const [sections, pointer] of [
+      [pr?.sections, `${root}/sections`],
+      [pr?.solution?.sections, `${root}/solution/sections`],
+    ]) {
+      (sections || []).forEach((section, k) => {
+        (section.parts || []).forEach((part, j) =>
+          check(part, `${pointer}/${k}/parts/${j}`)
+        );
+      });
+    }
+  });
+  return problems;
+}
 export function normaliseCandidate(c, opts = {}) {
   if (!c || typeof c !== 'object') return c;
   const blocks = [],
@@ -1811,30 +1881,6 @@ export function normaliseCandidate(c, opts = {}) {
 function normaliseCandidateProse(c, opts = {}) {
   if (!c || typeof c !== 'object') return c;
   const changes = [];
-  // No solutions document and no solution text: an answer the reader still wrote is its own derivation, not a
-  // transcription (ioaa-2021-theory-tq-14-q: eight "derived results", one of them wrong; tq-6-q: a self-contradicting
-  // note). A choice key may be printed with the problem and stays.
-  if (opts.solutionsDocument === false) {
-    (c.problems || []).forEach((pr, i) => {
-      const s = pr.solution;
-      if (s && typeof s === 'object' && String(s.statement || '').trim()) {
-        return;
-      }
-      const drop = (holder, p) => {
-        const a = holder?.answer;
-        if (a && typeof a === 'object' && a.kind !== 'choice') {
-          delete holder.answer;
-          changes.push(
-            `${p}/answer: dropped — no solutions document and no solution text (a derived answer is not a transcription)`
-          );
-        }
-      };
-      drop(pr, `/problems/${i}`);
-      (pr.parts || []).forEach((pt, j) =>
-        drop(pt, `/problems/${i}/parts/${j}`)
-      );
-    });
-  }
   // A paper with one document (a compilation that prints problems and solutions together: icho-best-1980-1990) whose
   // reader filed solution figures and spans under "solutions": the only document there is is the one meant
   // (figures.mjs failed every crop with "document solutions not prepared")

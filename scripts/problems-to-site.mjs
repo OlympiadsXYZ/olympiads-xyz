@@ -45,6 +45,7 @@ import { readConsolidations } from './lib/problem-consolidations.mjs';
 import { outsideFencedCode, splitFencedCode } from './lib/fenced-code.mjs';
 import { readProblemMedia, problemMediaLines } from './lib/problem-media.mjs';
 import { sourceDocumentFor } from './lib/problem-source-document.mjs';
+import { readProblemCompanions } from './lib/problem-companions.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT =
@@ -1977,6 +1978,7 @@ export function solutionOriginalFor(paper, problem, overlay = {}) {
 }
 
 export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
+  const companion = figureOpts.companions?.get(problem.id);
   lyricsPaper = paper; // linkLyrics: the paper whose originals a lyrics note links to
   const lines = [];
   lines.push('---');
@@ -2040,7 +2042,12 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       : null,
   ].filter(Boolean);
   if (lead.length) lines.push(`*${keepUnits(lead.join(' · '))}*`, '');
-  const caveat = caveatNoteText(paper.caveat, !!problem.solution?.incomplete);
+  // Only an exact, validated companion may suppress its stale missing-question note.
+  // The original canonical caveat and its receipt remain unchanged.
+  const caveat =
+    companion?.role === 'slide' && companion.suppressCaveat
+      ? ''
+      : caveatNoteText(paper.caveat, !!problem.solution?.incomplete);
   if (caveat) {
     lines.push(
       '<Warning title="Бележка към темата">',
@@ -2182,6 +2189,32 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       true
     )
   );
+  if (companion?.role === 'slide') {
+    lines.push(
+      ...sectionLines(
+        [
+          {
+            id: `companion-question-${companion.partIndex + 1}`,
+            title: 'Въпрос от брошурата',
+            parts: [
+              {
+                label: companion.partLabel,
+                statement: companion.questionStatement,
+              },
+            ],
+          },
+        ],
+        problem,
+        resolveStatement
+      ),
+      `[Брошура с въпросите](${companion.bookletSolutionUrl}) · ` +
+        `[Оригинал на брошурата](${archiveUrl(
+          companion.subject,
+          companion.bookletArchiveKey
+        )})`,
+      ''
+    );
+  }
   for (const fig of unanchored(statementFigs)) {
     lines.push(figureMarkdown(fig), '');
   }
@@ -2189,6 +2222,13 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   lines.push(...problemMediaLines(problem.id, figureOpts.media));
   if (problem.parts?.length) {
     problem.parts.forEach((part, k) => {
+      const partAnchor =
+        companion?.role === 'booklet'
+          ? companion.partAnchors.find(anchor => anchor.index === k)
+          : null;
+      if (partAnchor) {
+        lines.push(`<ProblemSection id="${partAnchor.id}">`, '');
+      }
       const text =
         part.points != null
           ? String(part.statement).replace(
@@ -2245,6 +2285,14 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
           sourceText(t, problem, resolveStatement)
         )
       );
+      if (partAnchor) {
+        lines.push(
+          `[Слайдове към въпрос ${k + 1}](${partAnchor.slideSolutionUrl})`,
+          '',
+          '</ProblemSection>',
+          ''
+        );
+      }
     });
   }
   lines.push(...sectionLines(problem.sections, problem, resolveStatement));
@@ -2736,6 +2784,7 @@ function main() {
     anchors: readFigureAnchors(ROOT),
     stats: newFigureStats(),
     media: readProblemMedia(ROOT, records, ledger, { retiredProblemIds }),
+    companions: readProblemCompanions(ROOT, records, ledger, routes),
   };
 
   // Bootstrap ownership only from the exact generator signature. Never sweep

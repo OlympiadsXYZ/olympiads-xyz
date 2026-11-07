@@ -34,6 +34,7 @@ import {
   provenanceFor,
   compileSchema,
   figureEvidenceProblems,
+  answerSourceProblems,
   independence,
   nowIso,
   sha256File,
@@ -86,6 +87,9 @@ const blockers = checkerEvidenceProblems(
 );
 for (const issue of supplementarySourceErrors(candidate, manifest))
   blockers.push(`${issue.path}: ${issue.message}`);
+for (const issue of answerSourceProblems(candidate, manifest)) {
+  blockers.push(`${issue.path}: ${issue.message}`);
+}
 const claimedSha =
   checker.candidateSha256 || checker.checker?.candidateSha256 || null;
 

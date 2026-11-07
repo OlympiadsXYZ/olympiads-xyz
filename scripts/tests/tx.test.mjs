@@ -2,7 +2,7 @@
 // poppler/rclone: a throw-away OLYMPIADS_TX_DIR holds a hand-written manifest
 // and candidates; only lib.mjs, receipt.mjs, repair.mjs, validate.mjs and
 // assemble.mjs are exercised.
-import { test } from 'node:test';
+import { test, test as publicationNodeTest } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -3699,7 +3699,7 @@ test('assembleWindows: printed labels in the titles pair a solutions-window plac
   assert.match(plain.data.problems[0].solution.statement, /Reflector answers/);
 });
 
-test("text-layer check: a legacy inline image and its caption line are not the field's prose; a derived answer is dropped when the paper has no solutions", async t => {
+test("text-layer check: a legacy inline image and its caption line are not the field's prose; absent solutions never erase an answer", async t => {
   const s = sandbox(t);
   fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
   const printed =
@@ -3735,7 +3735,7 @@ test("text-layer check: a legacy inline image and its caption line are not the f
     [],
     JSON.stringify(unprinted)
   );
-  // derived answers: no solutions document, no solution text → the answers go (a choice key stays)
+  // An absent key is a validation concern, never permission to erase the candidate.
   const d = candidate();
   d.problems[0].solution = {
     incomplete: true,
@@ -3744,7 +3744,10 @@ test("text-layer check: a legacy inline image and its caption line are not the f
   d.problems[0].answer = { kind: 'expression', latex: 'v = sqrt{GM/R}' };
   d.problems[0].parts[0].answer = { kind: 'choice', correct: 'B' };
   lib.normaliseCandidate(d, { solutionsDocument: false });
-  assert.equal(d.problems[0].answer, undefined);
+  assert.deepEqual(d.problems[0].answer, {
+    kind: 'expression',
+    latex: 'v = sqrt{GM/R}',
+  });
   assert.deepEqual(d.problems[0].parts[0].answer, {
     kind: 'choice',
     correct: 'B',
@@ -3950,3 +3953,635 @@ test('with one document in the paper, figures and spans filed under another docu
     'two documents: nothing moves'
   );
 });
+
+// Synthetic source fixtures exercise preservation and publication boundaries;
+// they do not assert the scientific truth of any real paper's answers.
+function answerSourceFixture(t) {
+  const s = sandbox(t),
+    m = structuredClone(manifest),
+    c = candidate();
+  delete m.documents.solutions;
+  delete c.paper.solutionSource;
+  const pr = c.problems[0];
+  pr.figures = [];
+  pr.parts = [];
+  pr.statement = 'Find the requested result.';
+  pr.solution = { incomplete: true, incompleteReason: 'No separate key.' };
+  pr.tx.sourceSpans = [{ document: 'problems', page: 1 }];
+  s.write('manifest.json', m);
+  const validate = (value, extra = []) => {
+    const file = s.write('candidates/answer-source.json', value);
+    const run = s.run('validate.mjs', [
+      file,
+      '--manifest',
+      path.join(s.dir, 'manifest.json'),
+      '--mode',
+      'candidate',
+      ...extra,
+    ]);
+    assert.ok(run.stdout.trim(), run.stderr);
+    return { ...run, report: JSON.parse(run.stdout), file };
+  };
+  return { s, m, c, pr, validate };
+}
+
+publicationNodeTest(
+  'answer source: printed non-choice Q-key answers survive intact while their source remains unresolved',
+  t => {
+    const { c, pr, validate } = answerSourceFixture(t);
+    pr.statement =
+      'Printed answer key: 92 vertical lines; 89 horizontal lines.';
+    pr.answer = {
+      kind: 'numeric',
+      value: 92,
+      tolerance: 0,
+      note: 'Printed vertical result.',
+    };
+    pr.parts = [
+      {
+        label: 'a)',
+        statement: 'Printed horizontal result: 89.',
+        answer: { kind: 'numeric', value: 89, unit: 'lines' },
+      },
+    ];
+    pr.sections = [
+      {
+        id: 'printed-key',
+        title: 'Printed key',
+        statement: '',
+        parts: [
+          {
+            label: 'b)',
+            statement: 'Printed designation: grid.',
+            answer: {
+              kind: 'text',
+              value: 'grid',
+              note: 'Keep printed designation.',
+            },
+          },
+        ],
+      },
+    ];
+    c.tx.notes = 'Reader says these answers are printed.';
+    c.tx.normalised = ['Preserved historical normalization.'];
+    const answers = structuredClone([
+      pr.answer,
+      pr.parts[0].answer,
+      pr.sections[0].parts[0].answer,
+    ]);
+    lib.normaliseCandidate(c, {
+      solutionsDocument: false,
+      documents: ['problems'],
+    });
+    assert.deepEqual(
+      [pr.answer, pr.parts[0].answer, pr.sections[0].parts[0].answer],
+      answers
+    );
+    assert.equal(c.tx.notes, 'Reader says these answers are printed.');
+    assert.ok(c.tx.normalised.includes('Preserved historical normalization.'));
+    const result = validate(c);
+    assert.equal(result.status, 1, result.stdout + result.stderr);
+    assert.deepEqual(
+      result.report.errors.map(e => e.path),
+      [
+        '/problems/0/answer',
+        '/problems/0/parts/0/answer',
+        '/problems/0/sections/0/parts/0/answer',
+      ]
+    );
+    assert(
+      result.report.errors.every(e =>
+        /answer source unresolved/.test(e.message)
+      )
+    );
+  }
+);
+
+publicationNodeTest(
+  'answer source: shared Q/K document with transcribed printed key is accepted',
+  t => {
+    const { c, pr, validate } = answerSourceFixture(t);
+    pr.answer = { kind: 'numeric', value: 92, note: 'Printed key value.' };
+    pr.solution = { statement: 'Printed answer key: 92 vertical lines.' };
+    const before = structuredClone(pr.answer);
+    lib.normaliseCandidate(c, {
+      solutionsDocument: false,
+      documents: ['problems'],
+    });
+    assert.deepEqual(pr.answer, before);
+    assert.deepEqual(pr.tx.sourceSpans, [{ document: 'problems', page: 1 }]);
+    const result = validate(c);
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+  }
+);
+
+publicationNodeTest(
+  'answer source: choice answers, separate key documents, and actual solution sections retain their behavior',
+  async t => {
+    for (const basis of ['choice', 'separate-key', 'solution-sections']) {
+      await t.test(basis, st => {
+        const { s, m, c, pr, validate } = answerSourceFixture(st);
+        pr.answer =
+          basis === 'choice'
+            ? { kind: 'choice', choices: ['A', 'B'], correct: 'B' }
+            : { kind: 'expression', latex: 'x' };
+        pr.parts = [
+          {
+            label: 'a)',
+            statement: 'Choose the stated result.',
+            answer: { kind: 'choice', correct: 'A' },
+          },
+        ];
+        if (basis === 'separate-key') {
+          m.documents.solutions = structuredClone(manifest.documents.solutions);
+          s.write('manifest.json', m);
+        }
+        if (basis === 'solution-sections') {
+          pr.solution = {
+            sections: [
+              {
+                id: 'official-key',
+                title: 'Printed key',
+                statement: '',
+                parts: [
+                  {
+                    label: 'a)',
+                    statement: 'The printed result is $x$.',
+                    answer: { kind: 'expression', latex: 'x' },
+                  },
+                ],
+              },
+            ],
+          };
+        }
+        const before = structuredClone(pr.answer);
+        lib.normaliseCandidate(c, {
+          solutionsDocument: basis === 'separate-key',
+        });
+        assert.deepEqual(pr.answer, before);
+        const result = validate(c);
+        assert.equal(result.status, 0, result.stdout + result.stderr);
+      });
+    }
+  }
+);
+
+publicationNodeTest(
+  'answer source: empty section shells do not exempt unsupported root or nested part answers',
+  t => {
+    const { c, pr, validate } = answerSourceFixture(t);
+    const a = {
+      kind: 'expression',
+      latex: 'v=1',
+      note: 'Derived by the reader.',
+    };
+    pr.answer = structuredClone(a);
+    pr.parts = [
+      {
+        label: 'a)',
+        statement: 'Find the result.',
+        answer: structuredClone(a),
+      },
+    ];
+    pr.sections = [
+      {
+        id: 'question-section',
+        title: 'Question',
+        statement: '',
+        parts: [
+          {
+            label: 'b)',
+            statement: 'Find the result.',
+            answer: structuredClone(a),
+          },
+        ],
+      },
+    ];
+    pr.solution.sections = [
+      {
+        id: 'empty-solution',
+        title: 'Empty solution shell',
+        statement: '',
+        parts: [{ label: 'c)', statement: '', answer: structuredClone(a) }],
+      },
+    ];
+    lib.normaliseCandidate(c, { solutionsDocument: false });
+    const result = validate(c);
+    assert.equal(result.status, 1);
+    assert.deepEqual(
+      result.report.errors
+        .filter(e => /answer source unresolved/.test(e.message))
+        .map(e => e.path),
+      [
+        '/problems/0/answer',
+        '/problems/0/parts/0/answer',
+        '/problems/0/sections/0/parts/0/answer',
+        '/problems/0/solution/sections/0/parts/0/answer',
+      ]
+    );
+    assert.deepEqual(pr.answer, a);
+    assert.deepEqual(pr.solution.sections[0].parts[0].answer, a);
+  }
+);
+
+publicationNodeTest(
+  'answer source: unresolved derived answer cannot obtain a passing receipt or promote with a forged pass',
+  t => {
+    const { s, c, pr } = answerSourceFixture(t);
+    pr.answer = {
+      kind: 'expression',
+      latex: 'v=1',
+      note: 'Derived by the reader.',
+    };
+    const cand = s.write('candidates/derived.json', c),
+      checker = s.write('derived-check.json', {
+        verdict: 'pass',
+        candidateSha256: lib.sha256File(cand),
+        defects: [],
+        summary: 'Synthetic publication boundary fixture.',
+        coverage: {
+          pagesRead: [
+            { document: 'problems', page: 1 },
+            { document: 'problems', page: 2 },
+          ],
+          problemsChecked: 1,
+          figuresChecked: 0,
+        },
+      }),
+      out = path.join(s.dir, 'derived.receipt.json');
+    const run = s.run('receipt.mjs', [
+      PAPER,
+      '--candidate',
+      cand,
+      '--defects',
+      checker,
+      '--reviewer',
+      'gemini:gemini-3.8-flash:answer-source',
+      '--out',
+      out,
+    ]);
+    assert.equal(run.status, 1, run.stdout + run.stderr);
+    const receipt = s.read(out);
+    assert.equal(receipt.verdict, 'fail');
+    assert.equal(receipt.blockers.length, 1, JSON.stringify(receipt.blockers));
+    assert.match(
+      receipt.blockers[0],
+      /\/problems\/0\/answer: answer source unresolved/
+    );
+    const forged = s.write('forged-pass.json', {
+      ...receipt,
+      verdict: 'pass',
+      blockers: [],
+    });
+    const target = lib.contentPathFor(PAPER, c.paper),
+      existed = fs.existsSync(target);
+    assert.equal(existed, false, 'synthetic target must not pre-exist');
+    const refused = s.run('promote.mjs', [
+      PAPER,
+      '--candidate',
+      cand,
+      '--receipt',
+      forged,
+    ]);
+    assert.equal(refused.status, 1, refused.stdout + refused.stderr);
+    assert.match(refused.stdout + refused.stderr, /answer source unresolved/);
+    assert.equal(
+      fs.existsSync(target),
+      false,
+      'no canonical file may be written'
+    );
+    assert.deepEqual(s.read(cand).problems[0].answer, pr.answer);
+    pr.solution = { statement: 'Printed answer key: $v=1$.' };
+    s.write('candidates/derived.json', c);
+    const freshCheck = s.read(checker);
+    freshCheck.candidateSha256 = lib.sha256File(cand);
+    s.write('derived-check.json', freshCheck);
+    const accepted = s.run('receipt.mjs', [
+      PAPER,
+      '--candidate',
+      cand,
+      '--defects',
+      checker,
+      '--reviewer',
+      'gemini:gemini-3.8-flash:answer-source',
+      '--out',
+      out,
+    ]);
+    assert.equal(accepted.status, 0, accepted.stdout + accepted.stderr);
+    assert.equal(s.read(out).verdict, 'pass');
+  }
+);
+
+publicationNodeTest(
+  'answer source: single-pass receipt receives the same unresolved-source hold',
+  t => {
+    const { s, c, pr } = answerSourceFixture(t);
+    pr.answer = {
+      kind: 'numeric',
+      value: 42,
+      note: 'Unsupported derived result.',
+    };
+    const cand = s.write('candidates/single-derived.json', c),
+      evidence = s.write('single-reader.json', {
+        reader: c.tx.reader,
+        candidateSha256: lib.sha256File(cand),
+        pagesRead: [
+          { document: 'problems', page: 1 },
+          { document: 'problems', page: 2 },
+        ],
+        problemsRead: 1,
+        figuresInspected: 0,
+        summary: 'Synthetic source fixture.',
+        sourceGaps: [],
+      }),
+      out = path.join(s.dir, 'single-derived.receipt.json');
+    const result = s.run('single-pass-receipt.mjs', [
+      PAPER,
+      '--candidate',
+      cand,
+      '--evidence',
+      evidence,
+      '--out',
+      out,
+    ]);
+    assert.equal(result.status, 1, result.stdout + result.stderr);
+    const receipt = s.read(out);
+    assert.equal(receipt.verdict, 'fail');
+    assert(
+      receipt.blockers.some(b =>
+        /\/problems\/0\/answer: answer source unresolved/.test(b)
+      ),
+      JSON.stringify(receipt.blockers)
+    );
+    assert.equal(receipt.reader.model, c.tx.reader.model);
+  }
+);
+
+publicationNodeTest(
+  'answer source: legacy final validation is unchanged while explicit new promotion validation is held',
+  t => {
+    const { s, m, c, pr } = answerSourceFixture(t);
+    pr.answer = { kind: 'numeric', value: 42 };
+    const final = lib.buildFinalPaper(
+      c,
+      lib.provenanceFor(c, {
+        reviewer: { provider: 'mechanical', model: 'single-pass-gates' },
+        promptVersion: 'v1',
+        checkedAt: '2026-10-28T00:00:00.000Z',
+        independent: false,
+        sourceHashes: { problems: m.documents.problems.sha256 },
+      })
+    );
+    const file = s.write('legacy-final.json', final.data),
+      companion = s.write('candidates/working.json', c),
+      args = [
+        file,
+        '--manifest',
+        path.join(s.dir, 'manifest.json'),
+        '--mode',
+        'final',
+      ];
+    const legacy = s.run('validate.mjs', args);
+    assert.equal(legacy.status, 0, legacy.stdout + legacy.stderr);
+    const publication = s.run('validate.mjs', [
+      ...args,
+      '--candidate-evidence',
+      companion,
+    ]);
+    assert.equal(
+      publication.status,
+      1,
+      publication.stdout + publication.stderr
+    );
+    assert(
+      JSON.parse(publication.stdout).errors.some(
+        e =>
+          e.path === '/problems/0/answer' &&
+          /answer source unresolved/.test(e.message)
+      )
+    );
+  }
+);
+
+publicationNodeTest(
+  'answer source: solution text needs a recorded prepared source page rather than a reader claim',
+  t => {
+    const { c, pr, validate } = answerSourceFixture(t);
+    pr.answer = { kind: 'numeric', value: 92 };
+    pr.solution = { statement: 'Printed key: 92.' };
+    for (const spans of [
+      [],
+      [{ document: 'solutions', page: 1 }],
+      [{ document: 'problems', page: 3 }],
+    ]) {
+      pr.tx.sourceSpans = spans;
+      const result = validate(c);
+      assert.equal(result.status, 1);
+      assert(
+        result.report.errors.some(
+          e =>
+            e.path === '/problems/0/answer' &&
+            /answer source unresolved/.test(e.message)
+        )
+      );
+    }
+    pr.tx.sourceSpans = [{ document: 'problems', page: 1 }];
+    const result = validate(c);
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+  }
+);
+
+publicationNodeTest(
+  'answer source: declared but unprepared key roles do not bypass the hold; valid cached keys remain available',
+  async t => {
+    const available = structuredClone(manifest.documents.solutions);
+    const cases = [
+      ['missing-role', undefined, false],
+      ['empty-role', {}, false],
+      ['downloaded-false-incomplete', { downloaded: false }, false],
+      ['zero-pages', { ...available, pages: 0 }, false],
+      ['missing-pages', { ...available, pages: undefined }, false],
+      ['missing-hash', { ...available, sha256: undefined }, false],
+      ['zero-bytes', { ...available, bytes: 0 }, false],
+      ['valid-cached-key', { ...available, downloaded: false }, true],
+    ];
+    for (const [name, document, prepared] of cases) {
+      await t.test(name, st => {
+        const { s, m, c, pr, validate } = answerSourceFixture(st);
+        if (document !== undefined) m.documents.solutions = document;
+        s.write('manifest.json', m);
+        pr.answer = { kind: 'numeric', value: 92 };
+        const result = validate(c);
+        assert.equal(
+          result.status,
+          prepared ? 0 : 1,
+          result.stdout + result.stderr
+        );
+        assert.equal(
+          result.report.errors.some(
+            e =>
+              e.path === '/problems/0/answer' &&
+              /answer source unresolved/.test(e.message)
+          ),
+          !prepared
+        );
+        assert.deepEqual(pr.answer, { kind: 'numeric', value: 92 });
+      });
+    }
+  }
+);
+
+publicationNodeTest(
+  'answer source: printed Q key passes real final companion validation and isolated promotion',
+  t => {
+    const { s, m, c, pr } = answerSourceFixture(t);
+    void m;
+    pr.answer = { kind: 'numeric', value: 92, note: 'Printed key value.' };
+    pr.solution = {
+      sections: [
+        {
+          id: 'printed-key',
+          title: 'Printed key',
+          statement: 'Source answer key.',
+          parts: [
+            {
+              label: 'a)',
+              statement: 'Vertical lines: 92.',
+              statementAfter: 'Printed continuation after this entry.',
+              answer: { kind: 'numeric', value: 92 },
+            },
+          ],
+          statementAfterParts: 'Printed closing key paragraph.',
+        },
+      ],
+    };
+    const cand = s.write('candidates/printed-key.json', c),
+      checker = s.write('printed-key-check.json', {
+        verdict: 'pass',
+        candidateSha256: lib.sha256File(cand),
+        defects: [],
+        summary: 'Synthetic positive publication boundary fixture.',
+        coverage: {
+          pagesRead: [
+            { document: 'problems', page: 1 },
+            { document: 'problems', page: 2 },
+          ],
+          problemsChecked: 1,
+          figuresChecked: 0,
+        },
+      }),
+      receiptFile = path.join(s.dir, 'printed-key.receipt.json');
+    const issued = s.run('receipt.mjs', [
+      PAPER,
+      '--candidate',
+      cand,
+      '--defects',
+      checker,
+      '--reviewer',
+      'gemini:gemini-3.8-flash:printed-key',
+      '--out',
+      receiptFile,
+    ]);
+    assert.equal(issued.status, 0, issued.stdout + issued.stderr);
+    const receipt = s.read(receiptFile),
+      final = lib.buildFinalPaper(
+        c,
+        lib.provenanceFor(c, {
+          reviewer: receipt.reviewer,
+          promptVersion: receipt.promptVersion,
+          checkedAt: receipt.checkedAt,
+          sourceHashes: receipt.sourceHashes,
+          independent: true,
+          renderDpi: receipt.renderDpi,
+        })
+      ),
+      finalFile = s.write('printed-key.final.json', final.data);
+    assert.equal(final.contentHash, receipt.contentHash);
+    assert.equal(JSON.stringify(final.data).includes('"tx"'), false);
+    assert.deepEqual(final.data.problems[0].sourceSpans, [
+      { document: 'problems', page: 1 },
+    ]);
+    const checked = s.run('validate.mjs', [
+      finalFile,
+      '--manifest',
+      path.join(s.dir, 'manifest.json'),
+      '--mode',
+      'final',
+      '--candidate-evidence',
+      cand,
+    ]);
+    assert.equal(checked.status, 0, checked.stdout + checked.stderr);
+    assert.equal(JSON.parse(checked.stdout).ok, true);
+
+    // A real successful promote must write only inside a throw-away replica,
+    // including when this regression later runs from a normal repository checkout.
+    const promotionRepo = path.join(s.root, 'promotion-repo');
+    fs.cpSync(path.join(repo, 'scripts'), path.join(promotionRepo, 'scripts'), {
+      recursive: true,
+    });
+    for (const file of [
+      'content/problems/schema.json',
+      'content/problem-taxonomy.json',
+      'src/mdx-plugins/fenced-code.js',
+      'src/archive/labels.ts',
+    ]) {
+      const destination = path.join(promotionRepo, file);
+      fs.mkdirSync(path.dirname(destination), { recursive: true });
+      fs.copyFileSync(path.join(repo, file), destination);
+    }
+    const nodeModules = path.dirname(
+      path.dirname(fileURLToPath(import.meta.resolve('ajv/package.json')))
+    );
+    const promoted = spawnSync(
+      process.execPath,
+      [
+        path.join(promotionRepo, 'scripts/tx/promote.mjs'),
+        PAPER,
+        '--candidate',
+        cand,
+        '--receipt',
+        receiptFile,
+        '--no-approve',
+      ],
+      {
+        cwd: promotionRepo,
+        encoding: 'utf8',
+        env: {
+          ...process.env,
+          OLYMPIADS_TX_DIR: s.root,
+          NODE_PATH: [nodeModules, process.env.NODE_PATH]
+            .filter(Boolean)
+            .join(path.delimiter),
+        },
+      }
+    );
+    assert.equal(promoted.status, 0, promoted.stdout + promoted.stderr);
+    const target = path.join(
+        promotionRepo,
+        'content/problems/physics/ZZ/2099',
+        `${PAPER}.json`
+      ),
+      published = s.read(target),
+      storedReceipt = s.read(
+        path.join(promotionRepo, 'content/problem-receipts', `${PAPER}.json`)
+      );
+    assert.equal(lib.sha256File(target), receipt.contentHash);
+    assert.equal(storedReceipt.verdict, 'pass');
+    assert.deepEqual(published.problems[0].answer, pr.answer);
+    assert.deepEqual(published.problems[0].sourceSpans, [
+      { document: 'problems', page: 1 },
+    ]);
+    assert.equal(
+      published.problems[0].solution.sections[0].parts[0].statementAfter,
+      'Printed continuation after this entry.'
+    );
+    assert.equal(
+      published.problems[0].solution.sections[0].statementAfterParts,
+      'Printed closing key paragraph.'
+    );
+    assert.deepEqual(published, final.data);
+    t.diagnostic(
+      `Actual isolated promotion PASS: ${receipt.contentHash}; printed Q-key answer and source spans retained.`
+    );
+  }
+);

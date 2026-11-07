@@ -25,6 +25,7 @@ import {
   provenanceFor,
   compileSchema,
   figureEvidenceProblems,
+  answerSourceProblems,
   sha256File,
   contentPathFor,
   run,
@@ -86,6 +87,9 @@ if (
   receipt.checkerCandidateSha256 !== receipt.candidateSha256
 ) {
   fail('receipt was issued for a candidate the checker did not check');
+}
+for (const issue of answerSourceProblems(candidate, manifest)) {
+  fail(`${issue.path}: ${issue.message}`);
 }
 const figProblems = figureEvidenceProblems(
   candidate,

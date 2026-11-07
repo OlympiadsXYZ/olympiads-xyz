@@ -3,8 +3,10 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 
 export const jsonText = value => JSON.stringify(value, null, 2) + '\n';
-export const sha256 = value => crypto.createHash('sha256').update(value).digest('hex');
-export const readJson = (file, fallback) => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback;
+export const sha256 = value =>
+  crypto.createHash('sha256').update(value).digest('hex');
+export const readJson = (file, fallback) =>
+  fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback;
 export function atomicWrite(file, text) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const temporary = `${file}.${process.pid}.partial`;
@@ -12,47 +14,127 @@ export function atomicWrite(file, text) {
   // Windows refuses the rename while another process holds the target open (several loop workers
   // and the ship share the ledger): wait a little and try again before giving up
   for (let attempt = 1; ; attempt++) {
-    try { fs.renameSync(temporary, file); return; }
-    catch (e) {
-      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) { try { fs.unlinkSync(temporary); } catch {} throw e; }
-      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * attempt);
+    try {
+      fs.renameSync(temporary, file);
+      return;
+    } catch (e) {
+      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) {
+        try {
+          fs.unlinkSync(temporary);
+        } catch {}
+        throw e;
+      }
+      Atomics.wait(
+        new Int32Array(new SharedArrayBuffer(4)),
+        0,
+        0,
+        50 * attempt
+      );
     }
   }
 }
 export function walkJson(dir) {
   if (!fs.existsSync(dir)) return [];
-  return fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name)).flatMap(e => {
-    const file = path.join(dir, e.name);
-    return e.isDirectory() ? walkJson(file) : e.name.endsWith('.json') && e.name !== 'schema.json' ? [file] : [];
-  });
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .flatMap(e => {
+      const file = path.join(dir, e.name);
+      return e.isDirectory()
+        ? walkJson(file)
+        : e.name.endsWith('.json') && e.name !== 'schema.json'
+        ? [file]
+        : [];
+    });
 }
 export function readPapers(root) {
-  const ids = new Set(), problems = new Set();
+  const ids = new Set(),
+    problems = new Set();
   return walkJson(path.join(root, 'content/problems')).map(file => {
-    const bytes = fs.readFileSync(file), data = JSON.parse(bytes.toString('utf8'));
-    if (!data.paper || !Array.isArray(data.problems)) throw new Error(`Invalid paper: ${file}`);
+    const bytes = fs.readFileSync(file),
+      data = JSON.parse(bytes.toString('utf8'));
+    if (!data.paper || !Array.isArray(data.problems)) {
+      throw new Error(`Invalid paper: ${file}`);
+    }
     const { paper } = data;
-    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(paper.id) || !/^[a-z]+$/.test(paper.subject)) throw new Error(`Unsafe paper id/subject: ${file}`);
+    if (
+      !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(paper.id) ||
+      !/^[a-z]+$/.test(paper.subject)
+    ) {
+      throw new Error(`Unsafe paper id/subject: ${file}`);
+    }
     if (ids.has(paper.id)) throw new Error(`Duplicate paper id: ${paper.id}`);
     ids.add(paper.id);
     for (const problem of data.problems) {
-      if (!problem.id.startsWith(paper.id + '-') || /[/\\\x00]/.test(problem.id) || problem.id.includes('..')) throw new Error(`Unsafe/unscoped problem id: ${problem.id}`);
-      if (problems.has(problem.id)) throw new Error(`Duplicate problem id: ${problem.id}`);
+      if (
+        !problem.id.startsWith(paper.id + '-') ||
+        /[/\\\x00]/.test(problem.id) ||
+        problem.id.includes('..')
+      ) {
+        throw new Error(`Unsafe/unscoped problem id: ${problem.id}`);
+      }
+      if (problems.has(problem.id)) {
+        throw new Error(`Duplicate problem id: ${problem.id}`);
+      }
       problems.add(problem.id);
     }
-    return { file, relativePath: path.relative(root, file), data, contentHash: sha256(bytes) };
+    return {
+      file,
+      relativePath: path.relative(root, file),
+      data,
+      contentHash: sha256(bytes),
+    };
   });
 }
 export function publicationState(record, ledger) {
   const { paper } = record.data;
-  if (paper.status === 'withdrawn' || paper.status === 'quarantined') return { eligible: false, reason: paper.status };
+  if (paper.status === 'withdrawn' || paper.status === 'quarantined') {
+    return { eligible: false, reason: paper.status };
+  }
   const entry = ledger?.papers?.[paper.id];
   if (!entry) return { eligible: false, reason: 'no-publication-record' };
-  if (entry.supersededBy) return { eligible: false, reason: `superseded-by:${entry.supersededBy}` };
-  if (entry.contentHash !== record.contentHash) return { eligible: false, reason: 'revision-needs-review' };
-  if (entry.kind === 'legacy' && /^[a-f0-9]{40}$/.test(entry.sourceCommit || '') && entry.recordedAt) return { eligible: true, quality: 'legacy' };
+  if (entry.supersededBy) {
+    return { eligible: false, reason: `superseded-by:${entry.supersededBy}` };
+  }
+  if (entry.contentHash !== record.contentHash) {
+    return { eligible: false, reason: 'revision-needs-review' };
+  }
+  if (
+    entry.kind === 'legacy' &&
+    /^[a-f0-9]{40}$/.test(entry.sourceCommit || '') &&
+    entry.recordedAt
+  ) {
+    return { eligible: true, quality: 'legacy' };
+  }
   const review = entry.review;
-  if (entry.kind === 'reviewed' && paper.status !== 'draft' && review?.verdict === 'pass' && review.contentHash === record.contentHash && review.reviewer?.provider && review.reviewer?.model && review.reviewer?.requestId && review.checkedAt && review.sourceHashes?.problems && Array.isArray(review.defects) && review.defects.length === 0 && !(review.blockers?.length) && (!review.independence || review.independence.independent === true || review.independence.allowSameModel === true)) return { eligible: true, quality: 'reviewed', verifiedAt: review.checkedAt, independent: !review.independence || review.independence.independent === true, mechanical: review.reviewer.provider === 'mechanical', cropAudit: review.checkerMode === 'crops', singlePass: review.checkerMode === 'single-pass' };
+  if (
+    entry.kind === 'reviewed' &&
+    paper.status !== 'draft' &&
+    review?.verdict === 'pass' &&
+    review.contentHash === record.contentHash &&
+    review.reviewer?.provider &&
+    review.reviewer?.model &&
+    review.reviewer?.requestId &&
+    review.checkedAt &&
+    review.sourceHashes?.problems &&
+    Array.isArray(review.defects) &&
+    review.defects.length === 0 &&
+    !review.blockers?.length &&
+    (!review.independence ||
+      review.independence.independent === true ||
+      review.independence.allowSameModel === true)
+  ) {
+    return {
+      eligible: true,
+      quality: 'reviewed',
+      verifiedAt: review.checkedAt,
+      independent:
+        !review.independence || review.independence.independent === true,
+      mechanical: review.reviewer.provider === 'mechanical',
+      cropAudit: review.checkerMode === 'crops',
+      singlePass: review.checkerMode === 'single-pass',
+    };
+  }
   return { eligible: false, reason: 'invalid-publication-record' };
 }
 
@@ -65,17 +147,39 @@ export function publicationState(record, ledger) {
 // lands on magnetism even though a shorter "electromagnetism" alias exists.
 export function controlledTopics(proposed, taxonomy) {
   const found = new Set();
+  // A legacy canonical topic can already be the site's exact displayed label.
+  // Fall back to that label only when it names one unique existing category.
+  const labelIds = new Map();
+  for (const entry of taxonomy.topics) {
+    const label =
+      typeof entry.label === 'string' ? entry.label.toLowerCase().trim() : '';
+    if (!label) continue;
+    if (!labelIds.has(label)) labelIds.set(label, entry.id);
+    else if (labelIds.get(label) !== entry.id) labelIds.set(label, null);
+  }
   const matches = (topic, key) => topic === key || topic.startsWith(key + '/');
   for (const raw of proposed || []) {
     const topic = String(raw).toLowerCase().trim();
-    const candidates = [...new Set([topic, topic.replace(/^physics\//, ''), topic.replace(/^astronomy\//, '')])];
+    const candidates = [
+      ...new Set([
+        topic,
+        topic.replace(/^physics\//, ''),
+        topic.replace(/^astronomy\//, ''),
+      ]),
+    ];
     let best = null;
     for (const entry of taxonomy.topics) {
       for (const key of [entry.id, ...entry.aliases]) {
-        if (candidates.some(c => matches(c, key)) && (!best || key.length > best.key.length)) best = { key, id: entry.id };
+        if (
+          candidates.some(c => matches(c, key)) &&
+          (!best || key.length > best.key.length)
+        ) {
+          best = { key, id: entry.id };
+        }
       }
     }
     if (best) found.add(best.id);
+    else if (labelIds.get(topic)) found.add(labelIds.get(topic));
   }
   return [...found].sort();
 }

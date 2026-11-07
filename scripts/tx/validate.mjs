@@ -26,6 +26,7 @@ import {
   fail,
   readJson,
   compileSchema,
+  answerSourceProblems,
   mathSpans,
   splitMath,
   proseOnly,
@@ -232,6 +233,13 @@ if (!validate(schemaInput)) {
         e.params?.allowedValues ? ` [${e.params.allowedValues.join('|')}]` : ''
       }`
     );
+  }
+}
+// Apply this hold to working candidates and explicit promotion validation.
+// Standalone validation of legacy final stock retains its existing contract.
+if (mode === 'candidate' || args['candidate-evidence']) {
+  for (const issue of answerSourceProblems(data, manifest)) {
+    err(issue.path, issue.message);
   }
 }
 for (const issue of problemMetadataErrors(data, manifest)) {
